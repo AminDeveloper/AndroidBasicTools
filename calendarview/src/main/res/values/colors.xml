@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimaryDark">#1976d2</color>-->
+    <color name="colorAccent">#1976d2</color>
+    <color name="item_background">#e3e1e1</color>
+    <color name="color_blue_dark">#1976d2</color>
+    <color name="true_blue">#1976d2</color>
+
+    <color name="gray">#636363</color>
+    <color name="gray2">#434343</color>
+    <color name="child_background_color">#e4e8ef</color>
+    <color name="pastel_gray">#cbcbcb</color>
+
+    <color name="nav_gray_item">#adabab</color>
+    <color name="white">#ffffff</color>
+    <color name="blck">#000000</color>
+    <color name="news_text_back">#4f000000</color>
+    <color name="friday_calendar">#ffdfdee0</color>
+    <color name="light_gray_clandar">#ffebebeb</color>
+    <color name="pink">#fd2163</color>
+    <color name="child_background">#cecece</color>
+    <color name="text_calendar_months">#9B9B9B</color>
+    <color name="border_calendar">#d9d9d9</color>
+    <color name="dodgar_blue">#2196f3</color>
+    <color name="green_blue">#0f5daa</color>
+    <color name="yellow_green">#7ed321</color>
+    <color name="dark_tangerine">#f6a623</color>
+    <color name="redd">#BE1E2D</color>
+    <color name="chrome_yellow">#f6a623</color>
+    <color name="dark_gray_clandar">#f5f5f5</color>
+    <color name="medium_sea_green">#27ae61</color>
+    <color name="lite_white">#f3f3f3</color>
+    <color name="gray_white">#ffd8d8d8</color>
+    <color name="line_calander">#c8c8c8</color>
+
+    <color name="back_dore">#4a5d78</color>
+
+    <color name="back_progress_high">#004D40</color>
+    <color name="back_progress_medium">#FF3D00</color>
+    <color name="back_progress_low">#D50000</color>
+
+
+    <color name="red_you">#ff4d4d</color>
+    <color name="colorPrimary">#2196f3</color>
+
+</resources>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:paddingEnd="1dp"
+    android:background="@color/border_calendar"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="1dp"
+    android:layoutDirection="ltr">
+
+    <LinearLayout
+        android:background="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/day_Of_week_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="شنبه"
+            android:textColor="@color/nav_gray_item"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            android:visibility="gone"
+
+            />
+
+        <FrameLayout
+            android:id="@+id/view_calendar"
+            android:layout_width="55dp"
+            android:layout_height="86dp">
+
+
+
+
+            <TextView
+
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/day_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:text="16"
+                android:textColor="@color/text_calendar_months"
+                android:textSize="8dp"
+                />
+
+            <!--<TextView-->
+
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:id="@+id/reminder_count"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom|end"-->
+            <!--android:text="a16"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:background="@color/pink"-->
+            <!--android:textSize="8sp" />-->
+
+            <FrameLayout
+                android:id="@+id/reminder_layout"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:padding="2dp"
+                android:layout_gravity="bottom|end"
+
+                >
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/reminder_back" />
+
+                <TextView
+                    android:id="@+id/reminder_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginTop="0dp"
+                    android:gravity="center"
+                    android:text="a16"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+
+                    android:textSize="8sp" />
+            </FrameLayout>
+
+        </FrameLayout>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

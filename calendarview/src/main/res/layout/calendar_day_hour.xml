@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_white"
+        android:gravity="left"
+        android:orientation="horizontal"
+       android:paddingBottom="30dp"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:paddingTop="15dp"
+            android:paddingBottom="8dp"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            android:id="@+id/text_layout"
+            android:layout_width="0dp"
+            android:layout_gravity="top"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <View
+
+                android:layout_gravity="center"
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_calander"
+
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/hour_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="1 صبح"
+            android:textColor="@color/text_calendar_months" />
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">CalendarView</string>
+    <string name="today">امروز</string>
+    <string name="empty_field">تکمیل این فیلد الزامی می باشد</string>
+    <string-array name="month_arrays">
+        <item>فروردین</item>
+        <item>اردیبهشت</item>
+        <item>خرداد</item>
+        <item>تیر</item>
+        <item>مرداد</item>
+        <item>شهریور</item>
+        <item>مهر</item>
+        <item>آبان</item>
+        <item>آذر</item>
+        <item>دی</item>
+        <item>بهمن</item>
+        <item>اسفند</item>
+    </string-array>
+
+</resources>

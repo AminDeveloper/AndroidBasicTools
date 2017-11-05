@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/lite_white"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:background="@drawable/shadow_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/show_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="شنبه 12"
+                android:textColor="@color/colorPrimary"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:paddingTop="10dp"
+            android:background="@color/gray_white"
+            android:id="@+id/event_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:visibility="gone"
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/color_blue_dark"
+        android:src="@drawable/plus_floating"
+        app:layout_anchor="@+id/linearLayout"
+        app:layout_anchorGravity="right|bottom"
+        style="@style/floating_theme"
+
+        />
+</android.support.design.widget.CoordinatorLayout>

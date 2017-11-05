@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:background="@color/child_background_color">
+
+
+    <TextView
+        android:padding="12dp"
+        android:id="@+id/show_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="3/3/1372" />
+
+
+    <EditText
+
+        android:maxLines="1"
+        android:id="@+id/title_dialog_reminder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="عنوان"
+        android:padding="7dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/blck"
+        android:textCursorDrawable="@drawable/cursor_balck" />
+
+    <EditText
+        android:maxLines="2"
+        android:maxHeight="60dp"
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="12dp"
+        android:gravity="right|top"
+        android:hint="توضیحات"
+        android:padding="7dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/blck"
+        android:textCursorDrawable="@drawable/cursor_balck" />
+
+
+    <LinearLayout
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/first_time_title"
+        android:layout_weight="1"
+        android:padding="7dp"
+        android:text="از ساعت"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/first_time_value"
+            android:gravity="center"
+            android:layout_weight="4"
+            android:textSize="14sp"
+            android:padding="7dp"
+            android:text="-----"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/last_time_title"
+            android:layout_weight="1"
+            android:padding="7dp"
+            android:text="تا ساعت"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/last_time_value"
+            android:gravity="center"
+            android:layout_weight="4"
+            android:textSize="14sp"
+            android:padding="7dp"
+            android:text="-----"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="100dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginRight="7dp"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/reminder_min"
+            android:gravity="center"
+            android:text="یاداوری "
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <EditText
+            android:maxWidth="70dp"
+            android:id="@+id/remind"
+            android:inputType="number"
+            android:paddingStart="11dp"
+            android:paddingEnd="11dp"
+            android:maxLines="1"
+            android:gravity="right"
+            android:text="0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:gravity="center"
+            android:text="دقیقه قبل"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+<LinearLayout
+    android:layoutDirection="ltr"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:id="@+id/add_reminder"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="افزودن" />
+    <Button
+        android:visibility="gone"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:id="@+id/delete_reminder"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="حذف" />
+    <Button
+        android:visibility="gone"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:id="@+id/change_reminder"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ویرایش" />
+
+
+</LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/month_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="left"
+        >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+
+        >
+        <include
+            android:id="@+id/item_1"
+
+            layout="@layout/calendar_month_item"
+
+
+            />
+        <include
+            android:id="@+id/item_2"
+            layout="@layout/calendar_month_item"
+
+            />
+        <include
+            android:id="@+id/item_3"
+            layout="@layout/calendar_month_item"
+            />
+        <include
+            android:id="@+id/item_4"
+            layout="@layout/calendar_month_item"
+
+            />
+        <include
+            android:id="@+id/item_5"
+            layout="@layout/calendar_month_item"
+
+            />
+        <include
+            android:id="@+id/item_6"
+            layout="@layout/calendar_month_item"
+
+            />
+        <include
+            android:id="@+id/item_7"
+            layout="@layout/calendar_month_item"
+
+            />
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            >
+            <include
+                android:id="@+id/item_8"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_9"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_10"
+                layout="@layout/calendar_month_item"
+                />
+            <include
+                android:id="@+id/item_11"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_12"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_13"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_14"
+                layout="@layout/calendar_month_item"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            >
+            <include
+                android:id="@+id/item_15"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_16"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_17"
+                layout="@layout/calendar_month_item"
+                />
+            <include
+                android:id="@+id/item_18"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_19"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_20"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_21"
+                layout="@layout/calendar_month_item"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            >
+            <include
+                android:id="@+id/item_22"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_23"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_24"
+                layout="@layout/calendar_month_item"
+                />
+            <include
+                android:id="@+id/item_25"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_26"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_27"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_28"
+                layout="@layout/calendar_month_item"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:orientation="horizontal"
+            >
+            <include
+                android:id="@+id/item_29"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_30"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_31"
+                layout="@layout/calendar_month_item"
+                />
+            <include
+                android:id="@+id/item_32"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_33"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_34"
+                layout="@layout/calendar_month_item"
+
+                />
+            <include
+                android:id="@+id/item_35"
+                layout="@layout/calendar_month_item"
+
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
