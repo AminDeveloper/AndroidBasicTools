@@ -13,30 +13,31 @@ import com.paraxco.commontools.R
 import com.paraxco.listtools.ListTools.Adapter.RecyclerView.RecyclerViewDataItemAdapter
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase
 import com.paraxco.listtools.R.layout.simple_list
-import com.paraxco.listtools.R.layout.sliding_menu_item
 
 /**
  * Created by Amin on 8/8/2017.
  */
-public abstract class SlidingDialogMenu : DialogFragment() {
-    val items = java.util.LinkedList<slidingMenuItem<Any>>()
+public open class SlidingDialogMenu : DialogFragment() {
+    val items = java.util.LinkedList<DataItemBase<*>>()
 
     private var recyclerView: RecyclerView? = null
 
-    private var adapter: RecyclerViewDataItemAdapter<slidingMenuItem<Any>>? = null
+    private var adapter: RecyclerViewDataItemAdapter<DataItemBase<*>>? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater!!.inflate(simple_list, container, false)
         recyclerView = view.findViewById(R.id.list)
         fillItems()
-        adapter = RecyclerViewDataItemAdapter.initializeLinearRecyclerView(recyclerView, items) as RecyclerViewDataItemAdapter<slidingMenuItem<Any>>?
+        adapter = RecyclerViewDataItemAdapter.initializeLinearRecyclerView(recyclerView, items) as RecyclerViewDataItemAdapter<DataItemBase<*>>?
 
         return view
     }
 
     //fill items to be shown in menu
-    protected abstract fun fillItems()
+    protected open fun fillItems(){
+
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
@@ -80,14 +81,9 @@ public abstract class SlidingDialogMenu : DialogFragment() {
 //        }
 //    }
 
-    abstract class slidingMenuItem<T> : DataItemBase<T>(sliding_menu_item) {
-//        override fun initializeView(view: View?) {
 //
-//        }
-    }
 
     fun show(supportFragmentManager: FragmentManager?) {
-
 
 //        val data = Bundle()
 //        data.putStringArrayList(Tag.ITEMS, menuItems)

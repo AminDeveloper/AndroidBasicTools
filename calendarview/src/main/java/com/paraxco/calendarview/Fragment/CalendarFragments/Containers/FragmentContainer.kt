@@ -14,7 +14,7 @@ import com.paraxco.calendarview.Adapters.RecyclerViewPagerAdapters.FragmentHolde
 import com.paraxco.calendarview.Adapters.RecyclerViewPagerAdapters.InstaneousEndlessRecyclerAdapter
 import com.paraxco.calendarview.Fragments.CalendarFragment
 import com.paraxco.calendarview.Fragments.CalendarFragments.CalendarPages.CalendarDateFragment
-import com.paraxco.calendarview.Fragments.CalendarFragments.ListSlidingMenue
+import com.paraxco.calendarview.Fragments.CalendarFragments.StringListSlidingMenue
 import com.paraxco.calendarview.Helpers.CalendarHelpers.CalendarViewManager
 import com.paraxco.calendarview.Interface.ValueContainer
 import com.paraxco.calendarview.R
@@ -192,9 +192,9 @@ abstract class FragmentContainer : BaseFragment(), AdapterView.OnItemSelectedLis
 
         return object : View.OnClickListener {
             override fun onClick(v: View?) {
-                val calendarDialogMenu = ListSlidingMenue()
+                val calendarDialogMenu = StringListSlidingMenue()
                 calendarDialogMenu.setTitleList(listOf("ماه", "هفته", "روز"))
-                calendarDialogMenu.selectListener = object : ListSlidingMenue.ItemSelectedListener {
+                calendarDialogMenu.selectListener = object : StringListSlidingMenue.ItemSelectedListener {
                     override fun onItemSelected(i: Int) {
 
 //                        CalendarListHelper.recyclerViewEvent.visibility = View.GONE

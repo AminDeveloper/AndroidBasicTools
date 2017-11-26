@@ -5,12 +5,13 @@ import android.widget.Toast
 import com.paraxco.basictools.ListTools.Model.CustomItem
 
 import com.paraxco.basictools.R
+import com.paraxco.calendarview.Fragments.CalendarFragments.StringListSlidingMenue
 import com.paraxco.commontools.Activities.BaseActivity
 import com.paraxco.listtools.ListTools.Adapter.RecyclerView.RecyclerViewDataItemAdapter
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase
 import kotlinx.android.synthetic.main.list_tools_test.*
 import com.paraxco.commontools.Utils.Permision.PermisionUtils
-
+import com.paraxco.listtools.ListTools.Dialog.SlidingDialogMenu
 
 
 /**
@@ -23,6 +24,30 @@ class ListToolsTest : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.list_tools_test)
+
+        button.setOnClickListener {
+            var slidingDialogMenu= SlidingDialogMenu()
+            slidingDialogMenu.items.add(CustomItem(this,1))
+            slidingDialogMenu.items.add(CustomItem(this,2))
+            slidingDialogMenu.items.add(CustomItem(this,3))
+            slidingDialogMenu.items.add(CustomItem(this,4))
+            slidingDialogMenu.items.add(CustomItem(this,5))
+            slidingDialogMenu.items.add(CustomItem(this,6))
+            slidingDialogMenu.items.add(CustomItem(this,7))
+            slidingDialogMenu.items.add(CustomItem(this,8))
+            slidingDialogMenu.items.add(CustomItem(this,9))
+            slidingDialogMenu.show(supportFragmentManager)
+
+            var stringListSlidingMenue=StringListSlidingMenue()
+            stringListSlidingMenue.setTitleList(arrayOf("a", "b", "c"))
+
+//            stringListSlidingMenue.show(supportFragmentManager)
+
+
+
+        }
+
+
         items?.add(CustomItem(this,1))
         items?.add(CustomItem(this,2))
         items?.add(CustomItem(this,3))

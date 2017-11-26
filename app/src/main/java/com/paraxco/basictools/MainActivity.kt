@@ -2,6 +2,7 @@ package com.paraxco.basictools
 
 import android.content.Intent
 import android.os.Bundle
+import com.paraxco.basictools.Activities.ListTools.ListToolsTest
 import com.paraxco.basictools.CalendarView.CalendarViewTest
 import com.paraxco.commontools.Activities.BaseActivity
 import kotlinx.android.synthetic.main.main_activity.*
@@ -15,6 +16,9 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+        showListToolsTest.setOnClickListener({
+            startListToolsTest()
+        })
         showNotificationTest.setOnClickListener({
             startNotificationBadgeTest()
         })
@@ -27,10 +31,18 @@ class MainActivity : BaseActivity() {
 
     }
 
+    private fun startListToolsTest() {
+        val myIntent = Intent(this, ListToolsTest::class.java)
+//        myIntent.putExtra("key", value) //Optional parameters
+        this.startActivity(myIntent)
+
+    }
+
     private fun startImageToolsTest() {
         val myIntent = Intent(this, ImageToolsTest::class.java)
 //        myIntent.putExtra("key", value) //Optional parameters
-        this.startActivity(myIntent)    }
+        this.startActivity(myIntent)
+    }
 
     private fun startNotificationBadgeTest() {
 

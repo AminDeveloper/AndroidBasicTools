@@ -38,14 +38,14 @@ public class CustomItem extends DataItemBase {
     @Override
     public void onHideItem() {
         super.onHideItem();
-        Toast.makeText(mcontext, "onHideItem " + i, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mcontext, "onHideItem " + i, Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onShowItem() {
         super.onShowItem();
-        Toast.makeText(mcontext, "onShowItem " + i, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mcontext, "onShowItem " + i, Toast.LENGTH_SHORT).show();
 
     }
 }
