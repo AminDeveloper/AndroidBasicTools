@@ -1,6 +1,9 @@
 package com.paraxco.calendarview.Fragments.CalendarFragments.CalendarPages
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.paraxco.calendarview.Adapters.RecyclerViewPagerAdapters.FragmentHolder
 import com.paraxco.calendarview.Helpers.CalendarHelpers.CalendarViewManager
 import com.paraxco.calendarview.Interface.ValueContainer
@@ -25,6 +28,16 @@ abstract class CalendarDateFragment : BaseFragment(), FragmentHolder.ViewFragmen
 
     abstract fun getData(): PersianCalendar?
 
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater!!.inflate(getViewRes(), container, false)
+
+        return view
+
+    }
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setView(view)
+    }
     override fun setView(itemView: View?) {
         this.customView = itemView
 //        if(selectedNotShowing)
@@ -34,6 +47,7 @@ abstract class CalendarDateFragment : BaseFragment(), FragmentHolder.ViewFragmen
 
     override fun onShowingView() {
         selectedNotShowing=true
+
     }
 
     override fun getView(): View? {
@@ -52,4 +66,6 @@ abstract class CalendarDateFragment : BaseFragment(), FragmentHolder.ViewFragmen
     fun getViewByID(res: Int): View {
         return view!!.findViewById(res)
     }
+
+    abstract fun reInitNeeded(): Boolean
 }

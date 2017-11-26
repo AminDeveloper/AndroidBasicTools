@@ -1,33 +1,30 @@
 package com.paraxco.calendarview.Fragments
 
-import android.nfc.Tag
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
+import android.support.design.widget.FloatingActionButton
+import android.support.v4.app.FragmentManager
 import android.view.View
-import android.view.ViewGroup
-import com.activeandroid.ActiveAndroid
-import com.activeandroid.Configuration
 import com.paraxco.calendarview.Helpers.CalendarHelpers.CalendarViewManager
-import com.paraxco.calendarview.Model.CalendarModels.ReminderData
 import com.paraxco.calendarview.R
 import com.paraxco.commontools.Utils.SmartLogger
+import com.paraxco.listtools.ListTools.ViewGroupSwitcher.ViewContainerFragment
 import ir.hamsaa.persiandatepicker.util.PersianCalendar
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import kotlinx.android.synthetic.main.calendar_activity.*
 
 
 /**
  * Created by Amin on 10/14/2017.
  */
-class CalendarFragment : Fragment() {
+class CalendarFragment : ViewContainerFragment() {
     companion object {
         var calendarViewManager: CalendarViewManager? = null
+        var calendarFragment: CalendarFragment? = null
     }
 
     init {
     }
+
     var requestedViewType: Int = 0
         set(value) {
             field = value
@@ -51,27 +48,12 @@ class CalendarFragment : Fragment() {
             SmartLogger.logDebug()
         }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        CalendarFragment.calendarFragment = this
 
-
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.calendar_activity, container, false)
         SmartLogger.logDebug()
-        initializeORM()
-
-        return view
-    }
-
-    private var startTime :Long= 0
-    override fun onStart() {
-        super.onStart()
-        startTime = System.currentTimeMillis()
-        SmartLogger.logDebug("took nothing")
-
-    }
-
-    override fun onResume() {
-        super.onResume()
+//        initializeORM()
         doAsync {
             Thread.sleep(350)
             uiThread {
@@ -80,19 +62,36 @@ class CalendarFragment : Fragment() {
         }
 
         val endtTime = System.currentTimeMillis()
-        SmartLogger.logDebug("took " + (endtTime - startTime) + " millisecond")
+//        SmartLogger.logDebug("took " + (endtTime - startTime) + " millisecond")
     }
 
+    public override fun getViewRes(): Int {
+        return R.layout.calendar_main_fragment
+    }
 
+//    private var startTime: Long = 0
+//    override fun onStart() {
+//        super.onStart()
+//        startTime = System.currentTimeMillis()
+//        SmartLogger.logDebug("took nothing")
+//
+//    }
+
+//    override fun onResume() {
+//        super.onResume()
+//
+//    }
 
 
     private fun initializeWithViewManager() {
         val startTime = System.currentTimeMillis()
 
         SmartLogger.logDebug("requestedViewType" + requestedViewType)
-        fab
+//        fab
 
-        calendarViewManager = CalendarViewManager(childFragmentManager, insert_point, fab, view!!)
+//        calendarViewManager = CalendarViewManager(childFragmentManager, view!!.findViewById(R.id.insert_point),view!!.findViewById(R.id.fab), view!!)
+        calendarViewManager = CalendarViewManager(supportFragmentManager, view!!.findViewById(R.id.insert_point), view!!.findViewById(R.id.fab), view!!)
+
         calendarViewManager?.curentDate = requestedDate
         SmartLogger.logDebug(requestedViewType.toString())
         calendarViewManager?.initialPageNumber = requestedViewType
@@ -102,9 +101,25 @@ class CalendarFragment : Fragment() {
         SmartLogger.logDebug("took " + (endtTime - startTime) + " millisecond")
     }
 
+    public var supportFragmentManager: FragmentManager? = null
+        get() {
+            return if (isAttached)
+                childFragmentManager
+            else {
+                field
+            }
+        }
+
+
+//    private fun getSupportFragmentManager(): FragmentManager? {
+//
+//    }
+
     override fun onDestroy() {
         super.onDestroy()
         SmartLogger.logDebug()
+        calendarViewManager = null
+
     }
 
     override fun onDestroyView() {
@@ -114,13 +129,13 @@ class CalendarFragment : Fragment() {
 
     }
 
-    private val DATA_BASE_NAME= "calendarViewDB"
+    private val DATA_BASE_NAME = "calendarViewDB"
 
-    fun initializeORM(){
-        val dbConfiguration = Configuration.Builder(context)
-                .setDatabaseName(DATA_BASE_NAME)
-                //                .setDatabaseVersion(3)
-                .setModelClasses(ReminderData::class.java).create()
-        ActiveAndroid.initialize(dbConfiguration)
-    }
+//    fun initializeORM() {
+//        val dbConfiguration = Configuration.Builder(context)
+//                .setDatabaseName(DATA_BASE_NAME)
+//                //                .setDatabaseVersion(3)
+//                .setModelClasses(ReminderData::class.java).create()
+//        ActiveAndroid.initialize(dbConfiguration)
+//    }
 }

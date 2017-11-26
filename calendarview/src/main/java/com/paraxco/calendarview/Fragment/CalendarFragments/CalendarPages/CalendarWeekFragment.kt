@@ -1,14 +1,11 @@
 package com.paraxco.calendarview.Fragments.CalendarFragments.CalendarPages
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.paraxco.calendarview.Fragments.CalendarFragments.Containers.CalendarWeeksViewFragment
 import com.paraxco.calendarview.Helpers.CalendarHelpers.CalendarListHelpers.CalendarListHelperBase
 import com.paraxco.calendarview.Helpers.CalendarHelpers.CalendarListHelpers.WeeksCalendarListHelper
-
 import com.paraxco.calendarview.R
 import com.paraxco.commontools.Utils.SmartLogger
 import com.paraxco.commontools.Utils.Utils
@@ -51,15 +48,18 @@ class CalendarWeekFragment : CalendarDateFragment() {
         SmartLogger.logDebug("took nothing")
 
     }
+
     override fun detachView() {
         calendarHelper?.removeObservers()
     }
+
     override fun onShowingView() {
         super.onShowingView()
-        if(view==null)return
+        if (view == null) return
 
 
     }
+
     private fun iniitializeReminders() {
         calendarHelper!!.refreshRemindersList()//must be initialized
 //        calendarReminderItems.clear()
@@ -80,18 +80,18 @@ class CalendarWeekFragment : CalendarDateFragment() {
         calendarHelper!!.visualizeOnRecyclerView(customView?.findViewById(R.id.calendar_list))
         calendarHelper!!.setGotoWeekListener(object : CalendarListHelperBase.GotoWeekListener {
             override fun gotoWeek(persianCalendar: PersianCalendar) {
-                dateContainer?.value=persianCalendar
+                dateContainer?.value = persianCalendar
                 calendarWeeksViewFragment?.updateFragmentDate(persianCalendar!!)
             }
         })
-        val persianCalendar = PersianCalendar()//today
-        (getViewByID(R.id.today_text_view) as TextView).text = getTodayString(persianCalendar)
-        (getViewByID(R.id.today_text_view) as TextView).setOnClickListener {
-            //  dateContainer!!.value = persianCalendar
-            iniitializeReminders()
-            //   calendarWeeksViewFragment?.updateFragmentDate(persianCalendar)
-
-        }
+//        val persianCalendar = PersianCalendar()//today
+//        (getViewByID(R.id.today_text_view) as TextView).text = getTodayString(persianCalendar)
+//        (getViewByID(R.id.today_text_view) as TextView).setOnClickListener {
+//            //  dateContainer!!.value = persianCalendar
+//            iniitializeReminders()
+//            //   calendarWeeksViewFragment?.updateFragmentDate(persianCalendar)
+//
+//        }
 
     }
 
@@ -124,6 +124,11 @@ class CalendarWeekFragment : CalendarDateFragment() {
 
     public fun getCurentWeek(): Int {
         return requestedWeek
+    }
+
+    override fun reInitNeeded(): Boolean {
+        SmartLogger.logDebug(calendarHelper!!.isInThisWeek().toString())
+        return !calendarHelper!!.isInThisWeek()
     }
 
     override fun onPageShow() {

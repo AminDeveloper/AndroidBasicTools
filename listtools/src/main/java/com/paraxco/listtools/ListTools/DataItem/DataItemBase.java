@@ -2,7 +2,7 @@ package com.paraxco.listtools.ListTools.DataItem;
 
 import android.view.View;
 
-import com.paraxco.basictools.ListTools.Interface.ListItemClickListener;
+import com.paraxco.listtools.ListTools.Interface.ListItemClickListener;
 import com.paraxco.listtools.ListTools.Interface.ItemViewHolder;
 
 
@@ -29,6 +29,12 @@ public abstract class DataItemBase<DATA_TYPE> {
     public abstract void initializeView(View view);
 
     public void releaseView() {
+
+    }
+    public void onShowItem(){
+
+    }
+    public void onHideItem(){
 
     }
 

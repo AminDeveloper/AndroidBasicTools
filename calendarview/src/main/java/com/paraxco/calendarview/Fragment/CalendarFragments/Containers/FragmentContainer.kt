@@ -1,6 +1,7 @@
 package com.paraxco.calendarview.Fragments.CalendarFragments.Containers;
 
 import android.content.Context
+import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.view.View
@@ -9,18 +10,18 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
-import com.paraxco.calendarview.Adapters.RecyclerViewPagerAdapters.EndlessRecyclerAdapter
 import com.paraxco.calendarview.Adapters.RecyclerViewPagerAdapters.FragmentHolder
+import com.paraxco.calendarview.Adapters.RecyclerViewPagerAdapters.InstaneousEndlessRecyclerAdapter
+import com.paraxco.calendarview.Fragments.CalendarFragment
 import com.paraxco.calendarview.Fragments.CalendarFragments.CalendarPages.CalendarDateFragment
 import com.paraxco.calendarview.Fragments.CalendarFragments.ListSlidingMenue
 import com.paraxco.calendarview.Helpers.CalendarHelpers.CalendarViewManager
-import com.paraxco.calendarview.Helpers.Observers.ObserverHandlerBase
 import com.paraxco.calendarview.Interface.ValueContainer
 import com.paraxco.calendarview.R
 import com.paraxco.commontools.Fragment.BaseFragment
 import com.paraxco.commontools.Utils.SmartLogger
 import com.paraxco.commontools.Utils.Utils
-
+import com.paraxco.listtools.ListTools.ViewGroupSwitcher.ViewGroupSwitcher
 import ir.hamsaa.persiandatepicker.util.PersianCalendar
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.logging.Logger
@@ -32,10 +33,9 @@ import java.util.logging.Logger
  * Toolbar date picker
  *
  */
-abstract class FragmentContainer : BaseFragment(), AdapterView.OnItemSelectedListener, FragmentHolder.ViewFragment, ObserverHandlerBase.Observer {
+abstract class FragmentContainer : BaseFragment(), AdapterView.OnItemSelectedListener, FragmentHolder.ViewFragment, ViewGroupSwitcher.ViewContainer {
 
-
-    internal var vpAdapter: EndlessRecyclerAdapter? = null
+    internal var vpAdapter: InstaneousEndlessRecyclerAdapter? = null
     var dateContainer: ValueContainer<PersianCalendar>? = null// day changes will bo through it
     var calendarViewManager: CalendarViewManager? = null
 
@@ -55,6 +55,11 @@ abstract class FragmentContainer : BaseFragment(), AdapterView.OnItemSelectedLis
         return getView()!!.context
     }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setView(view)
+    }
+
     override fun setView(view: View?) {
         SmartLogger.logDebug("day number" + dateContainer!!.value.persianDay)
 
@@ -69,17 +74,24 @@ abstract class FragmentContainer : BaseFragment(), AdapterView.OnItemSelectedLis
         getViewByID(R.id.page_title).setOnClickListener(getViewSelectionListener())
         getViewByID(R.id.tree_point).setOnClickListener(getViewSelectionListener())
     }
+
     override fun onShowingView() {
+
+        if (calendarViewManager!!.getCurrentDateFragment().reInitNeeded())
+            view = contentView;
     }
 
+    override fun onHidingView() {
+
+    }
 
     override fun detachView() {
 //        ChangeDateObserverHandler.instance.removeObserver(this)
     }
 
-    override fun observe() {
-//        updateFragmentDate(dateContainer!!.value)
-    }
+//    override fun observe() {
+////        updateFragmentDate(dateContainer!!.value)
+//    }
 
     override fun getView(): View? {
         return contentView
@@ -103,7 +115,7 @@ abstract class FragmentContainer : BaseFragment(), AdapterView.OnItemSelectedLis
 //    }
 
     open fun viewPagerInit(persianCalendar: PersianCalendar) {
-        vpAdapter = EndlessRecyclerAdapter(getCalendarViewPager())
+        vpAdapter = InstaneousEndlessRecyclerAdapter(this, getCalendarViewPager(), CalendarFragment.calendarFragment!!.fragmentManager)
         getCalendarViewPager().adapter = vpAdapter
 
         initialzePagerToDate(persianCalendar)
@@ -120,13 +132,12 @@ abstract class FragmentContainer : BaseFragment(), AdapterView.OnItemSelectedLis
 
             override fun onPageSelected(position: Int) {
                 updateToolbarWithItem(position)
-
             }
         })
     }
 
     private fun getCalendarViewPager(): ViewPager {
-     return getViewByID(R.id.calendar_pager) as ViewPager
+        return getViewByID(R.id.calendar_pager) as ViewPager
     }
 
     /**
@@ -134,8 +145,10 @@ abstract class FragmentContainer : BaseFragment(), AdapterView.OnItemSelectedLis
      */
     abstract fun initialzePagerToDate(persianCalendar: PersianCalendar)
 
+    abstract fun getFragmentAtPoint(relativePosition: Int): CalendarDateFragment
+
     internal fun updateToolbarWithItem(position: Int) {
-        var selectedDateFragment = vpAdapter?.getEndlessFragmentAdapter()?.getItem(position) as CalendarDateFragment
+        var selectedDateFragment = vpAdapter?.getInstantaneousEndlessAdapter()?.getItem(position) as CalendarDateFragment
         setToolbarDate(selectedDateFragment.getData()!!)
     }
 
@@ -307,6 +320,7 @@ abstract class FragmentContainer : BaseFragment(), AdapterView.OnItemSelectedLis
         }
         SmartLogger.logDebug("computerSelect" + computerSelect.get())
     }
+
 
 }
 

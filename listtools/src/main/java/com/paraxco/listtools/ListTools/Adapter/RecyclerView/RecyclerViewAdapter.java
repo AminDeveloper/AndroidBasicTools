@@ -1,11 +1,9 @@
 package com.paraxco.listtools.ListTools.Adapter.RecyclerView;
 
 import android.content.Context;
-
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-
 
 import com.paraxco.listtools.ListTools.Adapter.AdapterHelper;
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase;
@@ -35,7 +33,7 @@ public abstract class RecyclerViewAdapter<DATA_ITEM_TYPE extends DataItemBase, V
 
     @Override
     public VH onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = adapterHelper.getView(viewGroup,viewType);
+        View view = adapterHelper.getView(viewGroup, viewType);
         VH viewHolder = getViewHolder(view);
         return viewHolder;
     }
@@ -44,14 +42,18 @@ public abstract class RecyclerViewAdapter<DATA_ITEM_TYPE extends DataItemBase, V
         adapterHelper.setItems(items);
     }
 
-    protected  VH getViewHolder(View view){
+    public DATA_ITEM_TYPE getItem(int position) {
+        return adapterHelper.getItem(position);
+    }
+
+    protected VH getViewHolder(View view) {
         return (VH) new RecyclerViewClickableHolder(view);
     }
 //    protected abstract void bindToViewHolder(DATA_ITEM_TYPE dataItem, VH holder);
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        adapterHelper.bindToViewHolder((ItemViewHolder) holder,position );
+        adapterHelper.bindToViewHolder((ItemViewHolder) holder, position);
     }
 
     @Override
@@ -60,13 +62,27 @@ public abstract class RecyclerViewAdapter<DATA_ITEM_TYPE extends DataItemBase, V
     }
 
     protected int getIndexOf(DATA_ITEM_TYPE dataItem) {
-        return  adapterHelper.getIndexOf(dataItem);
+        return adapterHelper.getIndexOf(dataItem);
     }
 
     @Override
     public void onViewRecycled(VH holder) {
         super.onViewRecycled(holder);
         adapterHelper.recycleViewHolder((ItemViewHolder) holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(VH holder) {
+        super.onViewAttachedToWindow(holder);
+        adapterHelper.onViewHolderShowed((ItemViewHolder) holder);
+
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(VH holder) {
+        super.onViewDetachedFromWindow(holder);
+        adapterHelper.onViewHolderHide((ItemViewHolder) holder);
+
     }
 
     public void clearItems() {

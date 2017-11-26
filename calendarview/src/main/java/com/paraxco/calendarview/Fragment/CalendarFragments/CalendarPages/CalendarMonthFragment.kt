@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ProgressBar
 import com.paraxco.calendarview.Fragments.CalendarFragments.Containers.CalendarMonthsFragment
 import com.paraxco.calendarview.Helpers.CalendarHelpers.CalendarListHelpers.CalendarListHelperBase
 import com.paraxco.calendarview.Helpers.CalendarHelpers.CalendarListHelpers.MonthCalendarListHelper
@@ -18,8 +19,9 @@ import ir.hamsaa.persiandatepicker.util.PersianCalendar
 
 class CalendarMonthFragment : CalendarDateFragment() {
 
-    val persianCalendar = PersianCalendar()
+//    val persianCalendar = PersianCalendar()
     override fun getData(): PersianCalendar? {
+        SmartLogger.logDebug(calendarHelper!!.date.persianDay.toString())
         return calendarHelper!!.date
     }
 
@@ -31,7 +33,7 @@ class CalendarMonthFragment : CalendarDateFragment() {
     private var calendarMonthsFragment: CalendarMonthsFragment? = null
 
     init {
-        calendarHelper = MonthCalendarListHelper(persianCalendar, this, R.layout.calendar_month_item)
+        calendarHelper = MonthCalendarListHelper(PersianCalendar(), this, R.layout.calendar_month_item)
     }
 
     //    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -60,9 +62,10 @@ class CalendarMonthFragment : CalendarDateFragment() {
     override fun detachView() {
         calendarHelper?.removeObservers()
     }
+
     override fun onShowingView() {
         super.onShowingView()
-        if(view==null)return
+        if (view == null) return
     }
 
 
@@ -91,9 +94,11 @@ class CalendarMonthFragment : CalendarDateFragment() {
     private fun initializeCalendar() {
 
         calendarHelper!!.setDateChangeListener(dateContainer!!)
-//        calendarHelper!!.visualizeOnView(customView?.findViewById(R.id.month_list) as LinearLayout?)
+//        calendarHelper!!.visualizeOnView(customView?.findViewById(R.id.month_list))
+        val recyclerView: RecyclerView = customView!!.findViewById(R.id.calendar_list)!!
+        val progressBar: ProgressBar = customView!!.findViewById(R.id.progressBar)!!
 
-        calendarHelper!!.visualizeOnRecyclerView(customView?.findViewById(R.id.calendar_list))
+        calendarHelper!!.visualizeOnRecyclerView(recyclerView,progressBar)
         calendarHelper!!.setGotoWeekListener(object : CalendarListHelperBase.GotoWeekListener {
             override fun gotoWeek(persianCalendar: PersianCalendar) {
                 calendarMonthsFragment?.updateFragmentDate(persianCalendar!!)
@@ -135,6 +140,17 @@ class CalendarMonthFragment : CalendarDateFragment() {
         return this
     }
 
+    override fun reInitNeeded(): Boolean {
+        SmartLogger.logDebug("YEAR "+getData()!!.persianYear.toString() + " ==  " +
+                dateContainer!!.value.persianYear.toString() + " " +
+
+              " MONTH "+ getData()!!.persianMonth.toString()+" == "+
+                dateContainer!!.value.persianMonth.toString())
+
+                return dateContainer ==null || !(getData()!!.persianYear == dateContainer!!.value.persianYear
+                && getData()!!.persianMonth == dateContainer!!.value.persianMonth
+                )
+    }
 
     override fun onPageShow() {
     }
@@ -146,7 +162,6 @@ class CalendarMonthFragment : CalendarDateFragment() {
     fun getResString(res: Int): String {
         return view!!.context!!.getString(res)
     }
-
 
     companion object {
         public fun getInflatedView(inflater: LayoutInflater?, container: ViewGroup?): View {

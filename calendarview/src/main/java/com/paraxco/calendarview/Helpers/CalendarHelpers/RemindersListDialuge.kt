@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import com.paraxco.calendarview.Fragments.CalendarFragments.CalendarPages.CalendarDateFragment
-import com.paraxco.calendarview.Helpers.Observers.ObserverHandlerBase
 import com.paraxco.calendarview.Helpers.Observers.ReminderObserverHandler
 import com.paraxco.calendarview.Model.CalendarModels.CalendarReminderItem
 import com.paraxco.calendarview.Model.CalendarModels.ReminderData
@@ -23,9 +22,7 @@ import java.util.*
  * Created by Amin on 10/11/2017.
  */
 
-class RemindersListDialuge(val date: Long, val context: Context, val calendarDateFragment: CalendarDateFragment) : ObserverHandlerBase.Observer {
-
-
+class RemindersListDialuge(val date: Long, val context: Context, val calendarDateFragment: CalendarDateFragment) : ReminderObserverHandler.ReminderObserver {
     private var alertDialog: AlertDialog? = null
     private lateinit var viewadd: View
     private val calendarReminderItems = mutableListOf<CalendarReminderItem>()
@@ -108,7 +105,7 @@ class RemindersListDialuge(val date: Long, val context: Context, val calendarDat
         }
     }
 
-    override fun observe() {
+    override fun observeReminderChange(data: List<ReminderData>?) {
         getReminders()
         if (listReminder!!.size > 0)
             iniitializeReminders()

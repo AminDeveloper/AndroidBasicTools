@@ -8,6 +8,8 @@ import android.os.Build;
 import android.util.Log;
 
 
+import com.paraxco.calendarview.Receivers.AlarmReceiver;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +40,15 @@ public class AlarmHelper {
 
 
     public AlarmHelper startAlarm(Alarm alarm) {
-        final Intent intent = new Intent(context, AlarmReceiver.class);
+//        final Intent intent = new Intent(context, AlarmReceiver.class);
+
+        Intent intent = new Intent("CalendarAlarmReceiver");
+
         intent.putExtra("idAlarm", String.valueOf(alarm.getId()));
         intent.putExtra("timeAlarm", String.valueOf(alarm.getTime()));
         intent.putExtra("calendarAlarm", alarm.getCalendar());
         Log.e("eeeee11111", alarm.getId() + "");
+
         start(PendingIntent.getBroadcast(context, alarm.getId(), intent, 0), alarm.getTime());
         this.alarm=alarm;
         alarmList.add(alarm);

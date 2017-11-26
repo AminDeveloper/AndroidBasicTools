@@ -2,10 +2,10 @@ package com.paraxco.listtools.ListTools.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase;
 import com.paraxco.listtools.ListTools.Interface.ItemViewHolder;
@@ -24,6 +24,7 @@ public class AdapterHelper<DATA_ITEM_TYPE extends DataItemBase> {
     protected Context context;
     private Map<Integer, Integer> resourceTypes = new HashMap<>();
     private Map<String, Integer> classType = new HashMap<>();
+//    private LruCache<Integer, View> viewCache = new LruCache<>(150);
 
     public AdapterHelper(Context context, List<DATA_ITEM_TYPE> items) {
         this.items = items;
@@ -58,14 +59,22 @@ public class AdapterHelper<DATA_ITEM_TYPE extends DataItemBase> {
     }
 
     public View getView(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(context).inflate(getTypeResource(viewType), viewGroup, false);
+        int res = getTypeResource(viewType);
+        View view;
+//         view = viewCache.get(res);
+//        if (view == null || view.isTemporarilyDetached()) {
+            view = LayoutInflater.from(context).inflate(res, viewGroup, false);
+//            viewCache.put(res, view);
+
+//            viewCache.put((Integer) holder.getView().getTag(),holder.getView());
+
+//        }
         return view;
     }
 
     public void setItems(List<DATA_ITEM_TYPE> items) {
         this.items = items;
     }
-
 
     public DATA_ITEM_TYPE getItem(int position) {
         return items.get(position);
@@ -80,17 +89,26 @@ public class AdapterHelper<DATA_ITEM_TYPE extends DataItemBase> {
             return items.indexOf(dataItem);
         return -1;
     }
-    public void bindToViewHolder(ItemViewHolder holder, int position ) {
+
+    public void bindToViewHolder(ItemViewHolder holder, int position) {
         DATA_ITEM_TYPE dataItem = getItem(position);
         holder.bindToDataItem(dataItem);
     }
+
     public <VH extends RecyclerView.ViewHolder> void recycleViewHolder(ItemViewHolder holder) {
         holder.recycle();
-
     }
+
+    public void onViewHolderShowed(ItemViewHolder holder) {
+        holder.onShowed();
+    }
+
+    public void onViewHolderHide(ItemViewHolder holder) {
+        holder.onHide();
+    }
+
     public <VH extends RecyclerView.ViewHolder> void clearItems() {
         items.clear();
     }
-
 
 }

@@ -1,6 +1,7 @@
 package com.paraxco.calendarview.Adapters.RecyclerViewPagerAdapters
 
 
+import android.support.v4.app.FragmentManager
 import android.support.v4.view.ViewPager
 import com.paraxco.calendarview.Adapters.EndlessFragmentAdapter
 
@@ -8,7 +9,7 @@ import com.paraxco.calendarview.Adapters.EndlessFragmentAdapter
  *
  */
 
-class EndlessRecyclerAdapter(viewPager: ViewPager) : FragmentToRecyclerViewPagerAdapter(viewPager.context, EndlessFragmentAdapter(null, viewPager)) {
+class EndlessRecyclerAdapter(viewPager: ViewPager, manager: FragmentManager?) : FragmentToRecyclerViewPagerAdapter(viewPager.context, EndlessFragmentAdapter(null, viewPager),manager ) {
     init {
         viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(p0: Int) {
@@ -20,7 +21,6 @@ class EndlessRecyclerAdapter(viewPager: ViewPager) : FragmentToRecyclerViewPager
             override fun onPageSelected(position: Int) {
                 getViewFragment(position).onShowingView()
             }
-
         })
     }
 

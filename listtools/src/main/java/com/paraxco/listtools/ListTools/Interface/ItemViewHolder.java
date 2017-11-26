@@ -16,4 +16,8 @@ public interface ItemViewHolder {
     void recycle();
     DataItemBase getDataItem();
     View findView(int id);
+
+    void onShowed();
+
+    void onHide();
 }

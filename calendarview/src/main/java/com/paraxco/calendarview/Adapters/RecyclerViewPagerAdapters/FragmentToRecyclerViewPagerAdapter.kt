@@ -2,6 +2,8 @@ package com.paraxco.calendarview.Adapters.RecyclerViewPagerAdapters
 
 import android.content.Context
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +17,8 @@ import android.view.ViewGroup
  *
  */
 
-open class FragmentToRecyclerViewPagerAdapter(var context: Context, private var fragmentAdapter: NotifyAwareAdapter) : RecyclerPagerAdapter<FragmentHolder>() {
+open class FragmentToRecyclerViewPagerAdapter(var context: Context, private var fragmentAdapter: NotifyAwareAdapter, manager: FragmentManager?) : RecyclerPagerAdapter<FragmentHolder>() {
+
 
     init {
         fragmentAdapter.setOnNotifyDataSetChange(object : NotifyDataSetChangedListener {
@@ -24,7 +27,42 @@ open class FragmentToRecyclerViewPagerAdapter(var context: Context, private var 
             }
         })
     }
+//    //for FragmentStatePagerAdapter(manager)
+//
+//    override fun getItem(position: Int): Fragment {
+//       return fragmentAdapter.getItem(position)
+//    }
+//
+//    override fun getCount(): Int {
+//       return fragmentAdapter.getCount()
+//    }
 
+
+    //for PagerAdapter
+//    override fun isViewFromObject(view: View?, `object`: Any?): Boolean {
+//       return view==`object`
+//    }
+//
+//    override fun instantiateItem(parent: ViewGroup, position: Int): Any {
+//
+//        val viewFragment = getViewFragment(position)
+//        val layout = LayoutInflater.from(context).inflate(viewFragment.getViewRes(), parent, false)
+//        parent.addView(layout)
+//        viewFragment.setView(layout)
+//
+//        return layout
+//    }
+//
+//    override fun destroyItem(collection: ViewGroup, position: Int, view: Any) {
+//        collection.removeView(view as View)
+//    }
+//
+//    override fun getCount(): Int {
+//        return fragmentAdapter.getCount()
+//    }
+
+
+//// for RecyclerPagerAdapter<FragmentHolder>()
     /**
      * @return real adapter
      */
@@ -40,13 +78,14 @@ open class FragmentToRecyclerViewPagerAdapter(var context: Context, private var 
         holder?.bind(getViewFragment(position))
     }
 
-
-     fun getViewFragment(position: Int): FragmentHolder.ViewFragment {
+    fun getViewFragment(position: Int): FragmentHolder.ViewFragment {
         return fragmentAdapter.getItem(position) as FragmentHolder.ViewFragment
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position//all item have different type
+//        return position//all item have different type
+        return 0//all item have same type
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): FragmentHolder {
@@ -64,12 +103,10 @@ open class FragmentToRecyclerViewPagerAdapter(var context: Context, private var 
         fun setOnNotifyDataSetChange(notifyDataSetChangedListener: NotifyDataSetChangedListener)
         fun getItem(position: Int): Fragment
         fun getCount(): Int
-
     }
 
     interface NotifyDataSetChangedListener {
         fun onNotifyDataSetChanged()
-
     }
 }
 
@@ -108,6 +145,7 @@ class FragmentHolder(view: View) : RecyclerPagerAdapter.ViewHolder(view) {
          * will be called when recycling view is showing this view
          */
         fun onShowingView()
+
         /**
          * @return requested view res
          */

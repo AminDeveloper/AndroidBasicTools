@@ -3,8 +3,14 @@ package com.paraxco.listtools.ListTools.Adapter.RecyclerView;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.view.Gravity;
+import android.view.View;
 
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
+import com.paraxco.commontools.Utils.SmartLogger;
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase;
 import com.paraxco.listtools.ListTools.Holder.RecyclerViewClickableHolder;
 
@@ -38,6 +44,10 @@ public class RecyclerViewDataItemAdapter<DATA_ITEM_TYPE extends DataItemBase> ex
         // specify an adapter (see also next example)
         RecyclerViewDataItemAdapter mAdapter = new RecyclerViewDataItemAdapter<>(mRecyclerView, items);
 
+//        mRecyclerView.setOnFlingListener(null);
+//        SnapHelper snapHelper = new LinearSnapHelper();
+//
+//        snapHelper.attachToRecyclerView(mRecyclerView);
 
         mAdapter.notifyDataSetChanged();
         return mAdapter;
@@ -57,6 +67,8 @@ public class RecyclerViewDataItemAdapter<DATA_ITEM_TYPE extends DataItemBase> ex
         // specify an adapter (see also next example)
         RecyclerViewDataItemAdapter mAdapter = new RecyclerViewDataItemAdapter<>(mRecyclerView, items);
 
+//        SnapHelper snapHelper = new GravitySnapHelper(Gravity.START);
+//        snapHelper.attachToRecyclerView(mRecyclerView);
 
         mAdapter.notifyDataSetChanged();
         return mAdapter;
@@ -77,7 +89,22 @@ public class RecyclerViewDataItemAdapter<DATA_ITEM_TYPE extends DataItemBase> ex
         RecyclerViewDataItemAdapter mAdapter = new RecyclerViewDataItemAdapter<>(mRecyclerView, items);
 
 
+        mRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+                SmartLogger.Companion.logDebug("");
+            }
+        });
+        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                SmartLogger.Companion.logDebug("");
+
+            }
+        });
         mAdapter.notifyDataSetChanged();
+
         return mAdapter;
     }
 //    public static RecyclerViewDataItemAdapter initializeEndlessViewPager(ViewPager viewPager) {

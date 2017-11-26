@@ -32,7 +32,16 @@ public class RecyclerViewClickableHolder extends RecyclerView.ViewHolder impleme
     public void recycle() {
         holderHelper.recycle();
     }
+    @Override
+    public void onShowed() {
+        holderHelper.showed();
+    }
 
+    @Override
+    public void onHide() {
+        holderHelper.hide();
+
+    }
     @Override
     public DataItemBase getDataItem() {
         return holderHelper.dataItem;
@@ -42,6 +51,8 @@ public class RecyclerViewClickableHolder extends RecyclerView.ViewHolder impleme
     public View findView(int id) {
         return holderHelper.findView(id,getView());
     }
+
+
 
 }
 

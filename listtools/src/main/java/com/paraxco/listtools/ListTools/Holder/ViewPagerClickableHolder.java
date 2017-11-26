@@ -42,5 +42,16 @@ public class ViewPagerClickableHolder extends ViewPagerAdapter.ViewHolder implem
         return holderHelper.findView(id,getView());
     }
 
+    @Override
+    public void onShowed() {
+        holderHelper.showed();
+    }
+
+    @Override
+    public void onHide() {
+        holderHelper.hide();
+
+    }
+
 }
 

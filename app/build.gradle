@@ -1,5 +1,5 @@
-//apply plugin: 'com.android.application'
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
+//apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
 
@@ -7,16 +7,16 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "26.0.2"
     defaultConfig {
-//        applicationId "com.paraxco.basictools"
+        applicationId "com.paraxco.basictools"
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [onesignal_app_id               : "bb152ef6-e2e8-440d-a1c5-cc5f1a20aa45",
-                                onesignal_google_project_number: "348423837546 "]
+//        manifestPlaceholders = [onesignal_app_id               : "bb152ef6-e2e8-440d-a1c5-cc5f1a20aa45",
+//                                onesignal_google_project_number: "348423837546 "]
     }
     buildTypes {
         release {
@@ -44,22 +44,10 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'com.android.support:design:26.1.0'
 
-    compile 'com.androidadvance:topsnackbar:1.1.1'
+    compile project(':commontools')
+    compile project(':calendarview')
+    compile project(':calendarview')
+    compile project(':imagetools')
 
-
-    compile 'io.reactivex.rxjava2:rxjava:2.0.2'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-//    depricated
-    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.onesignal:OneSignal:3.+@aar'
-    compile 'com.github.bumptech.glide:glide:3.5.2'
-
-
-    compile 'com.google.android.gms:play-services-maps:10.2+'
-    compile 'com.google.android.gms:play-services-gcm:10.2.+'//might not be necessary
-    compile "com.google.android.gms:play-services-location:10.2.+"
-    compile 'com.google.maps.android:android-maps-utils:0.5+'
-    compile project(':persiandatepicker')
 
 }

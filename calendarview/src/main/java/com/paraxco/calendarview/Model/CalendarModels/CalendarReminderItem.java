@@ -73,7 +73,7 @@ public class CalendarReminderItem extends DataItemBase {
 
                 }
                 reminderData.save();
-                ReminderObserverHandler.Companion.getInstance().informObservers();
+                ReminderObserverHandler.Companion.getInstance().informObservers(reminderData);
 
             }
         });

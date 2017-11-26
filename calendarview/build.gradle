@@ -1,17 +1,29 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+    }
+}
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+version '0.0.8'
+group 'com.paraxco'
 
 android {
     compileSdkVersion 26
 
 
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 16
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-
+        versionCode 6
+        versionName "0.0.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -34,8 +46,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'org.jetbrains.anko:anko-common:0.9'
-
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    compile project(':persiandatepicker')
 
     compile project(':listtools')
     compile project(':commontools')

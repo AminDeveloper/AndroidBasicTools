@@ -11,7 +11,7 @@ import org.jetbrains.anko.uiThread
 import java.util.*
 
 
-open class EndlessFragmentAdapter(manager: FragmentManager?, viewPager: ViewPager) : FragmentPagerAdapter(manager), FragmentToRecyclerViewPagerAdapter.NotifyAwareAdapter {
+open class EndlessFragmentAdapter(manager: FragmentManager?,var viewPager: ViewPager) : FragmentPagerAdapter(manager), FragmentToRecyclerViewPagerAdapter.NotifyAwareAdapter {
     internal val fragmentListPositive = LinkedList<Fragment>()//last
     internal val fragmentListNegetive = LinkedList<Fragment>()//future
     //note that scroll direction in view pager if from left to right
@@ -19,7 +19,6 @@ open class EndlessFragmentAdapter(manager: FragmentManager?, viewPager: ViewPage
     public var treshold: Int = 2//distance to load more
     public var allAllowed: Int = 10//number of item allowed for each list(note that is is not guranteed)
     var endlessLoader: EndlessLoader? = null
-    var viewPager: ViewPager = viewPager
     var notifyDataSetChangedListener: FragmentToRecyclerViewPagerAdapter.NotifyDataSetChangedListener? = null
     private var scrollRange: Int = 100
 

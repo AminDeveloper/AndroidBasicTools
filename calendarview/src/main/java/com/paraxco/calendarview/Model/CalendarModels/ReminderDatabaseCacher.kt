@@ -8,7 +8,8 @@ import com.paraxco.calendarview.Helpers.Observers.ReminderObserverHandler
  * Created by Amin on 10/29/2017.
  */
 
-class ReminderDatabaseCacher : ObserverHandlerBase.Observer {
+class ReminderDatabaseCacher : ReminderObserverHandler.ReminderObserver {
+
     var cachedReminders: List<ReminderData>? = null
         get() {
             if (field == null) {
@@ -17,13 +18,12 @@ class ReminderDatabaseCacher : ObserverHandlerBase.Observer {
                         .from(ReminderData::class.java)
                         .execute()
             }
-            return field;
+            return field
         }
         private set(value) {
             field = value
         }
-
-    override fun observe() {
+    override fun observeReminderChange(data: List<ReminderData>?) {
         cancel()
     }
 

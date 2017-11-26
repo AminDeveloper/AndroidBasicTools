@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="1dp"
-    android:layoutDirection="ltr">
+    android:layoutDirection="rtl">
+
 
     <LinearLayout
         android:background="@android:color/white"
@@ -29,7 +30,7 @@
 
             />
 
-        <FrameLayout
+        <RelativeLayout
             android:id="@+id/view_calendar"
             android:layout_width="55dp"
             android:layout_height="86dp">
@@ -38,6 +39,8 @@
 
 
             <TextView
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
 
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
@@ -63,12 +66,16 @@
             <!--android:background="@color/pink"-->
             <!--android:textSize="8sp" />-->
 
-            <FrameLayout
+            <RelativeLayout
+
                 android:id="@+id/reminder_layout"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:padding="2dp"
                 android:layout_gravity="bottom|end"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+
 
                 >
 
@@ -76,6 +83,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
                     android:src="@drawable/reminder_back" />
 
                 <TextView
@@ -83,6 +91,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_centerInParent="true"
+
                     android:layout_marginRight="0dp"
                     android:layout_marginTop="0dp"
                     android:gravity="center"
@@ -91,9 +101,9 @@
                     android:textColor="@color/white"
 
                     android:textSize="8sp" />
-            </FrameLayout>
+            </RelativeLayout>
 
-        </FrameLayout>
+        </RelativeLayout>
 
 
 

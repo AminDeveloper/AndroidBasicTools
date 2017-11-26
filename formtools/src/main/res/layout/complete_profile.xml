@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_blue_dark"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+
+        android:weightSum="4">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/edit_profile_personal"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/edit_profile_personal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/edit_profile_educational"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/edit_profile_educational_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/edit_profile_postal"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/edit_profile_postal_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/edit_profile_confirm"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/edit_profile_confirm_gray" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/shadow">
+
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <com.paraxco.app63167.Helpers.CustomViewPager
+            android:id="@+id/complete_profile_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:layout_weight="1">
+
+        </com.paraxco.app63167.Helpers.CustomViewPager>
+
+        <TextView
+            android:id="@+id/complete_profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_margin="10dp"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="5dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="بعدی" />
+    </LinearLayout>
+
+</LinearLayout>

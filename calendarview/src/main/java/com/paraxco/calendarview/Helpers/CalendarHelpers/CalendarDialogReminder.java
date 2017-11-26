@@ -108,7 +108,7 @@ public class CalendarDialogReminder {
                 reminderData.remove();
                 AlarmRegisterHelper.getInstance().remove(view.getContext(), reminderData);
 
-                notifyReminderList();
+                notifyReminderList(reminderData);
                 Toast.makeText(view.getContext(), "با موفقیت حذف شد", Toast.LENGTH_SHORT).show();
 //                calendarViewManager.refreshReminders(reminderData);
                 alertDialog.cancel();
@@ -165,14 +165,14 @@ public class CalendarDialogReminder {
 
         AlarmRegisterHelper.getInstance().register(context, reminderData);//initialtes Alarm ID
         reminderData.save();
-        notifyReminderList();
+        notifyReminderList(reminderData);
 
         Toast.makeText(view.getContext(), "با موفقیت افزوده شد", Toast.LENGTH_SHORT).show();
 //                calendarViewManager.refreshReminders(reminderData);
         alertDialog.cancel();
     }
 
-    private void notifyReminderList() {
+    private void notifyReminderList(ReminderData reminderData) {
 //        CalendarListHelper.calendarReminderItems.clear();
 //        ArrayList<ReminderData> listReminder = ReminderData.getAllForDay(CalendarListHelper.shareDate.getTimeInMillis());
 //        if (listReminder.size() != 0)
@@ -180,9 +180,10 @@ public class CalendarDialogReminder {
 //                CalendarListHelper.calendarReminderItems.add(new CalendarReminderItem(listReminder.get(i), calendarDateFragment));
 //        reminderAdapter = DataItemListAdapter.initializeLinearRecyclerView(CalendarListHelper.recyclerViewEvent, CalendarListHelper.calendarReminderItems);
 //        reminderAdapter.notifyDataSetChanged();
-        calendarDateFragment.refreshView();
 
-        ReminderObserverHandler.Companion.getInstance().informObservers();
+//        calendarDateFragment.refreshView();
+
+        ReminderObserverHandler.Companion.getInstance().informObservers(reminderData);
     }
 
     private void saveContents(View view, ReminderData reminderData) {
@@ -198,7 +199,7 @@ public class CalendarDialogReminder {
         if (reminderData.isEnable())
             AlarmRegisterHelper.getInstance().register(view.getContext(), reminderData);
         reminderData.save();
-        notifyReminderList();
+        notifyReminderList(reminderData);
 
 //                calendarViewManager.refreshReminders(reminderData);
         Toast.makeText(view.getContext(), "با موفقیت ویرایش شد", Toast.LENGTH_SHORT).show();
@@ -215,8 +216,8 @@ public class CalendarDialogReminder {
     private void showPickerDialog(final Context c) {
 
         PersianDatePickerDialog picker = new PersianDatePickerDialog(c)
-                .setPositiveButtonString("باشه")
-                .setNegativeButton("بیخیال")
+                .setPositiveButtonString("تایید")
+                .setNegativeButton("لغو")
                 .setTodayButton("امروز")
                 .setTodayButtonVisible(true)
                 .setMaxYear(1398)

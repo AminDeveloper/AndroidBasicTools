@@ -2,7 +2,7 @@ package com.paraxco.listtools.ListTools.Holder;
 
 import android.view.View;
 
-import com.paraxco.basictools.ListTools.Interface.ListItemClickListener;
+import com.paraxco.listtools.ListTools.Interface.ListItemClickListener;
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase;
 import com.paraxco.listtools.ListTools.Interface.ItemViewHolder;
 
@@ -40,6 +40,12 @@ public class HolderHelper {
     public void recycle() {
         this.dataItem.releaseView();
     }
+    public void showed(){
+        this.dataItem.onShowItem();
+    }
+    public void hide(){
+        this.dataItem.onHideItem();
+    }
 
     public View findView(int id, View itemView) {
         if (foundView.containsKey(id))
@@ -49,6 +55,5 @@ public class HolderHelper {
             foundView.put(id, found);
             return found;
         }
-
     }
 }

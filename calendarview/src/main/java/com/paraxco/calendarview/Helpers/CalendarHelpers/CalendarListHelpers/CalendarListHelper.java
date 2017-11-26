@@ -101,7 +101,7 @@ package com.paraxco.calendarview.Helpers.CalendarHelpers.CalendarListHelpers;//p
 //    }
 //
 //    @Override
-//    public void observe() {
+//    public void observeReminderChange() {
 //       refreshCalendarEvents();
 //    }
 //

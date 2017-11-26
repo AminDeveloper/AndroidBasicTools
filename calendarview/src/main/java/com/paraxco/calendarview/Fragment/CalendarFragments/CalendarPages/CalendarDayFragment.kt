@@ -1,7 +1,6 @@
 package com.paraxco.calendarview.Fragments.CalendarFragments.CalendarPages
 
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.paraxco.calendarview.R
 import com.paraxco.commontools.Utils.SmartLogger
 import com.paraxco.commontools.Utils.Utils
 import com.paraxco.listtools.ListTools.Adapter.RecyclerView.RecyclerViewDataItemAdapter
-
 import ir.hamsaa.persiandatepicker.util.PersianCalendar
 import java.util.*
 
@@ -27,7 +25,7 @@ class CalendarDayFragment : CalendarDateFragment() {
     }
 
     //    private var calendarHelper: CalendarListHelper? = null
-    private var reminderAdapter:  RecyclerViewDataItemAdapter<*>? = null
+    private var reminderAdapter: RecyclerViewDataItemAdapter<*>? = null
     private val calendarHourItems = mutableListOf<CalendarDayHourerItem>()
     var showDay: TextView? = null
 
@@ -59,6 +57,7 @@ class CalendarDayFragment : CalendarDateFragment() {
     override fun getViewRes(): Int {
         return getLayoutRes()
     }
+
     override fun setView(view: View?) {
         super.setView(view)
         iniitializeReminders()
@@ -71,18 +70,20 @@ class CalendarDayFragment : CalendarDateFragment() {
         showDay = customView?.findViewById(R.id.show_day)
 
         showDay?.text = getTodayString(currentDay)
-        if (currentDay.persianWeekDayName=="جمعه")
+        if (currentDay.persianWeekDayName == "جمعه")
             showDay?.setTextColor(Color.RED)
         else
             showDay?.setTextColor(getView()!!.resources.getColor(R.color.color_blue_dark))
         SmartLogger.logDebug("took nothing")
     }
+
     override fun detachView() {
 
     }
+
     override fun onShowingView() {
         super.onShowingView()
-        if(view==null)return
+        if (view == null) return
 
     }
 
@@ -110,7 +111,7 @@ class CalendarDayFragment : CalendarDateFragment() {
          calendarHourItems.add(CalendarDayHourerItem())
          calendarHourItems.add(CalendarDayHourerItem())
          calendarHourItems.add(CalendarDayHourerItem())*/
-        reminderAdapter = RecyclerViewDataItemAdapter.initializeLinearRecyclerView(customView!!.findViewById(R.id.event_list) , calendarHourItems)
+        reminderAdapter = RecyclerViewDataItemAdapter.initializeLinearRecyclerView(customView!!.findViewById(R.id.event_list), calendarHourItems)
     }
 
     private var manualCall: Boolean = true
@@ -144,12 +145,17 @@ class CalendarDayFragment : CalendarDateFragment() {
         return view!!.context!!.getString(res)
     }
 
+    override fun reInitNeeded(): Boolean {
+        return dateContainer==null || !(currentDay.persianYear == dateContainer!!.value.persianYear
+                && currentDay.persianMonth == dateContainer!!.value.persianMonth
+                && currentDay.persianDay == dateContainer!!.value.persianDay)
+    }
+
 
     override fun onPageShow() {
 //        com.activeandroid.util.Log.d(calendarHelper?.date!!)
 //        calendarWeeksViewFragment?.setToolbarDate(calendarHelper?.date!!)
     }
-
 
 
     companion object {

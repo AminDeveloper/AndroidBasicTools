@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/text_layout"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/text_view_lable"
+            android:layout_gravity="right"
+            android:hint="@string/gender" />
+
+        <LinearLayout style="@style/spinner_layout">
+
+            <RadioGroup
+                android:id="@+id/radioSex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_1"
+                    style="@style/radio_button"
+                    android:checked="true"
+                    android:text="@string/men" />
+
+                <RadioButton
+                    android:id="@+id/radio_2"
+                    style="@style/radio_button"
+                    android:text="@string/woman"
+
+                    />
+            </RadioGroup>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

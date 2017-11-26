@@ -4,9 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import com.paraxco.basictools.ViewPagerTools.Adapter.RecyclerPagerAdapter;
 import com.paraxco.listtools.ListTools.Adapter.AdapterHelper;
+import com.paraxco.listtools.ListTools.Adapter.RecyclerPagerAdapter;
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase;
 import com.paraxco.listtools.ListTools.Holder.ViewPagerClickableHolder;
 import com.paraxco.listtools.ListTools.Interface.ItemViewHolder;
@@ -17,8 +16,10 @@ import java.util.List;
  * Created by Amin on 9/24/2017.
  */
 
-public abstract class ViewPagerAdapter <DATA_ITEM_TYPE extends DataItemBase, VH extends RecyclerPagerAdapter.ViewHolder> extends RecyclerPagerAdapter<VH> {
+public abstract class ViewPagerAdapter<DATA_ITEM_TYPE extends DataItemBase, VH extends RecyclerPagerAdapter.ViewHolder> extends RecyclerPagerAdapter<VH> {
     AdapterHelper<DATA_ITEM_TYPE> adapterHelper;
+    private ItemViewHolder curentShowing;
+
 
     public ViewPagerAdapter(Context context, List<DATA_ITEM_TYPE> items) {
         adapterHelper = new AdapterHelper<>(context, items);
@@ -47,14 +48,14 @@ public abstract class ViewPagerAdapter <DATA_ITEM_TYPE extends DataItemBase, VH 
         adapterHelper.setItems(items);
     }
 
-    protected  VH getViewHolder(View view){
+    protected VH getViewHolder(View view) {
         return (VH) new ViewPagerClickableHolder(view);
     }
 
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        adapterHelper.bindToViewHolder((ItemViewHolder) holder,position );
+        adapterHelper.bindToViewHolder((ItemViewHolder) holder, position);
     }
 
     @Override
@@ -62,6 +63,25 @@ public abstract class ViewPagerAdapter <DATA_ITEM_TYPE extends DataItemBase, VH 
         super.onDestroyViewHolder(holder, position);
         adapterHelper.recycleViewHolder((ItemViewHolder) holder);
     }
+
+    @Override
+    public void onShowedViewHolder(VH holder, int position) {
+        super.onShowedViewHolder(holder, position);
+        if(curentShowing==holder)
+            return;
+        if (curentShowing != null)
+            adapterHelper.onViewHolderHide(curentShowing);
+        adapterHelper.onViewHolderShowed((ItemViewHolder) holder);
+        curentShowing = (ItemViewHolder) holder;
+    }
+
+//
+//    @Override
+//    public void onViewDetachedFromWindow(VH holder) {
+//        super.onViewDetachedFromWindow(holder);
+//        adapterHelper.onViewHolderHide((ItemViewHolder) holder);
+//
+//    }
 
     @Override
     public int getItemCount() {

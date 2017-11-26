@@ -4,7 +4,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.FragmentManager
 import android.view.View
 import android.view.ViewGroup
-import com.paraxco.calendarview.Adapters.RecyclerViewPagerAdapters.FragmentViewSwitcher
+import com.paraxco.listtools.ListTools.ViewGroupSwitcher.ViewGroupSwitcher
 import com.paraxco.calendarview.Fragments.CalendarFragments.CalendarPages.CalendarDateFragment
 import com.paraxco.calendarview.Fragments.CalendarFragments.Containers.CalendarDaysViewFragment
 import com.paraxco.calendarview.Fragments.CalendarFragments.Containers.CalendarMonthsFragment
@@ -22,7 +22,8 @@ import ir.hamsaa.persiandatepicker.util.PersianCalendar
  * give access to all view types and fragment
  *
  */
-class CalendarViewManager(val supportFragmentManager: FragmentManager,var viewGroup:ViewGroup , val fab: FloatingActionButton, val contentView: View) : ValueContainer<PersianCalendar> {
+class CalendarViewManager(val supportFragmentManager: FragmentManager?,var viewGroup:ViewGroup , val fab: FloatingActionButton, val contentView: View) : ValueContainer<PersianCalendar> {
+
     /**
      * holds current selected date for all pages
      */
@@ -35,7 +36,7 @@ class CalendarViewManager(val supportFragmentManager: FragmentManager,var viewGr
     override fun setValue(value: PersianCalendar) {
         curentDate.timeInMillis = value.timeInMillis//copying date millisecont and not references to avoid having two reference in different places
         System.out.println("setting day number" + curentDate!!.persianDay)
-        ChangeDateObserverHandler.instance.informObservers()
+        ChangeDateObserverHandler.instance.informObservers(value)
 //        vpAdapter?.notifyDataSetChanged()
     }
 
@@ -44,7 +45,7 @@ class CalendarViewManager(val supportFragmentManager: FragmentManager,var viewGr
      */
 //    private var vpAdapter: CalendarViewTypeRecyclerViewPagerAdapter? = null
 
-    private var fragmentViewSwitcher: FragmentViewSwitcher? = null
+    private var fragmentViewSwitcher: ViewGroupSwitcher? = null
 
     var initialPageNumber: Int = 0
 
@@ -74,7 +75,7 @@ class CalendarViewManager(val supportFragmentManager: FragmentManager,var viewGr
 //            }
 //        })
 
-        fragmentViewSwitcher = FragmentViewSwitcher(viewGroup)
+        fragmentViewSwitcher = ViewGroupSwitcher(viewGroup)
         //initiating three view types
         fragmentViewSwitcher?.addView(CalendarMonthsFragment().setCalendarViewManager(this))
         fragmentViewSwitcher?.addView(CalendarWeeksViewFragment().setCalendarViewManager(this))
@@ -122,7 +123,7 @@ class CalendarViewManager(val supportFragmentManager: FragmentManager,var viewGr
 
         fab!!.setOnClickListener {
             //opens new reminder dialog
-            CalendarDialogReminder(this.contentView.context, getCurrentDateFragment(), getCurrentDateFragment().getData()).showDialog()
+            CalendarDialogReminder(this.contentView.context, getCurrentDateFragment(), value).showDialog()
         }
 
     }
@@ -159,7 +160,7 @@ class CalendarViewManager(val supportFragmentManager: FragmentManager,var viewGr
 //        var fragments = vpAdapter?.getAllFragments()
         var viewInShow = fragmentViewSwitcher?.getItem(fragmentViewSwitcher!!.currentItem!!) as FragmentContainer
 
-        var fragmentInShow = viewInShow.vpAdapter?.getItem(viewInShow.vpAdapter!!.getEndlessFragmentAdapter().viewPager.currentItem) as CalendarDateFragment
+        var fragmentInShow = viewInShow.vpAdapter?.getItem(viewInShow.vpAdapter!!.getInstantaneousEndlessAdapter().viewPager.currentItem) as CalendarDateFragment
         return fragmentInShow
     }
 

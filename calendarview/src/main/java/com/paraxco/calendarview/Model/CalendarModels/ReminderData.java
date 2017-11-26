@@ -116,10 +116,10 @@ public class ReminderData extends CustomORMModel {
 
     public Calendar getFirstDate() {
         Calendar calendar = new PersianCalendar(date);
-        int hour= Integer.parseInt(firstHour.substring(0, 2));
-        int minute= Integer.parseInt(firstHour.substring(3, 5));
-        calendar.set(Calendar.HOUR,hour);
-        calendar.set(Calendar.MINUTE,minute);
+        int hour = Integer.parseInt(firstHour.substring(0, 2));
+        int minute = Integer.parseInt(firstHour.substring(3, 5));
+        calendar.set(Calendar.HOUR, hour);
+        calendar.set(Calendar.MINUTE, minute);
 
         return calendar;
     }
@@ -159,12 +159,12 @@ public class ReminderData extends CustomORMModel {
 //    }
 
 
-
-    static ReminderDatabaseCacher reminderDatabaseCacher=new ReminderDatabaseCacher();
+    static ReminderDatabaseCacher reminderDatabaseCacher = new ReminderDatabaseCacher();
 
     public static List<ReminderData> getAll() {
         return reminderDatabaseCacher.getCachedReminders();
     }
+
     public static ArrayList<ReminderData> getAllForDay(long value) {
         PersianCalendar date = new PersianCalendar();
         ArrayList<ReminderData> result = new ArrayList<>();
@@ -205,13 +205,17 @@ public class ReminderData extends CustomORMModel {
         }
         return result;
     }
+
     public static ReminderData getWithAlamrID(Alarm alarm) {
         List<ReminderData> list = new Select()
                 .from(ReminderData.class)
                 .where("alarmID = ? ", alarm.getId())
                 .execute();
+        if (list.size() == 0)
+            return null;
         return list.get(0);
     }
+
     public static ReminderData getWithReminderID(String reminderID) {
         List<ReminderData> list = new Select()
                 .from(ReminderData.class)
@@ -229,7 +233,6 @@ public class ReminderData extends CustomORMModel {
         }
         return result;
     }
-
 
 
 }

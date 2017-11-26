@@ -8,6 +8,7 @@ import com.paraxco.calendarview.Model.CalendarModels.CalendarReminderItem
 import com.paraxco.calendarview.Model.CalendarModels.ReminderData
 import com.paraxco.commontools.Utils.SmartLogger
 import com.paraxco.listtools.ListTools.Adapter.RecyclerView.RecyclerViewDataItemAdapter
+import com.paraxco.listtools.ListTools.DataItem.DataItemBase
 import ir.hamsaa.persiandatepicker.util.PersianCalendar
 import java.util.*
 
@@ -18,10 +19,11 @@ import java.util.*
 class WeeksCalendarListHelper(persianCalendar: PersianCalendar, calendarDateFragment: CalendarDateFragment, layout: Int) : CalendarListHelperBase(persianCalendar, calendarDateFragment, layout) {
     private var weekNumber: Int = 0
     var recyclerViewEvent: RecyclerView? = null
-    private var reminderAdapter: RecyclerViewDataItemAdapter<*>? = null
+    private var reminderAdapter: RecyclerViewDataItemAdapter<out DataItemBase<*>>? = null
     var calendarReminderItems = ArrayList<CalendarReminderItem>()
 
-    override fun getAdapter():  RecyclerViewDataItemAdapter<*>? {
+    override fun getAdapter(): RecyclerViewDataItemAdapter<out DataItemBase<*>>? {
+//        return null
         return RecyclerViewDataItemAdapter.initializeGridRecyclerView(recyclerView, 7, calendarItems)
 //        return DataItemListAdapter.initializeHorrizentalRecyclerView(recyclerView, calendarItems)
     }
@@ -31,7 +33,7 @@ class WeeksCalendarListHelper(persianCalendar: PersianCalendar, calendarDateFrag
     }
 
     override fun fillCalendarItems() {
-        val startTime=System.currentTimeMillis()
+        val startTime = System.currentTimeMillis()
 
         calendarItems = LinkedList()
         val tempCalendar = PersianCalendar()
@@ -49,8 +51,8 @@ class WeeksCalendarListHelper(persianCalendar: PersianCalendar, calendarDateFrag
 
             tempCalendar.addPersianDate(Calendar.DATE, 1)
         } while (tempCalendar.persianMonth == date.persianMonth)
-        val endtTime=System.currentTimeMillis()
-        SmartLogger.logDebug("took "+(endtTime-startTime)+" millisecond")
+        val endtTime = System.currentTimeMillis()
+        SmartLogger.logDebug("took " + (endtTime - startTime) + " millisecond")
     }
 
 
@@ -61,22 +63,24 @@ class WeeksCalendarListHelper(persianCalendar: PersianCalendar, calendarDateFrag
 
         calendarReminderItems.clear()
         if (isInThisWeek()) {//if data is not equal too global selected data do not show its reminders
-            val listReminder = ReminderData.getAllForDay(date.timeInMillis)
+            val listReminder = ReminderData.getAllForDay(dateChangeListener!!.value.timeInMillis)
             if (listReminder.size != 0)
                 for (i in listReminder.indices)
                     calendarReminderItems.add(CalendarReminderItem(listReminder[i], calendarDateFragment))
-            reminderAdapter = RecyclerViewDataItemAdapter.initializeLinearRecyclerView(recyclerViewEvent, calendarReminderItems)
-            recyclerViewEvent?.visibility = View.VISIBLE
-
+            if (calendarReminderItems.size != 0) {
+                reminderAdapter = RecyclerViewDataItemAdapter.initializeLinearRecyclerView(recyclerViewEvent, calendarReminderItems)
+                recyclerViewEvent?.visibility = View.VISIBLE
+            } else
+                recyclerViewEvent?.visibility = View.GONE
         } else
             recyclerViewEvent?.visibility = View.GONE
 
 //        dayItemsAdapter?.notifyDataSetChanged()
     }
 
-    private fun isInThisWeek(): Boolean {
+    public fun isInThisWeek(): Boolean {
         calendarItems?.forEach {
-            if(!it.isLink && it.thisDay.persianDay == dateChangeListener!!.value.persianDay )
+            if (!it.isLink && it.thisDay.persianDay == dateChangeListener!!.value.persianDay &&  it.thisDay.persianMonth == dateChangeListener!!.value.persianMonth&&  it.thisDay.persianYear == dateChangeListener!!.value.persianYear)
                 return true
         }
         return false
@@ -85,7 +89,6 @@ class WeeksCalendarListHelper(persianCalendar: PersianCalendar, calendarDateFrag
     fun requestWeek(weekNum: Int) {
         if (weekNum < 1 || weekNum > 6)
             return
-
         weekNumber = weekNum
     }
 

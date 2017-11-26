@@ -4,20 +4,22 @@ package com.paraxco.calendarview.Model.CalendarModels
 import android.app.Activity
 import android.graphics.Color
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.Spinner
 import android.widget.TextView
 import com.paraxco.calendarview.Fragments.CalendarFragments.CalendarPages.CalendarDateFragment
 import com.paraxco.calendarview.Helpers.CalendarHelpers.RemindersListDialuge
+import com.paraxco.calendarview.Helpers.Observers.ChangeDateObserverHandler
+import com.paraxco.calendarview.Helpers.Observers.ReminderObserverHandler
 import com.paraxco.calendarview.Interface.ValueContainer
+import com.paraxco.calendarview.Observers.ObserverList
 import com.paraxco.calendarview.R
 import com.paraxco.commontools.Utils.SmartLogger
 import com.paraxco.commontools.Utils.Utils
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase
 import com.paraxco.listtools.ListTools.Interface.ListItemClickListener
 import ir.hamsaa.persiandatepicker.util.PersianCalendar
-import kotlinx.android.synthetic.main.calendar_item.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
@@ -32,7 +34,9 @@ class CalendarDayItem
 //        blankDay = true;//this day is not real day but just for providing a space befor month starting
 //    }
 
-(thisDay: PersianCalendar, private val calendarDateFragment: CalendarDateFragment, internal var ValueContainer: ValueContainer<Int>, layout: Int) : DataItemBase<Any>(layout) {
+(thisDay: PersianCalendar, private val calendarDateFragment: CalendarDateFragment, internal var ValueContainer: ValueContainer<Int>, layout: Int) : DataItemBase<Any>(layout), ChangeDateObserverHandler.ChangeDateObserver, ReminderObserverHandler.ReminderObserver {
+
+
     private var reminderCount: Int = 0
     private val blankDay = false
     internal var day: Int = 0
@@ -46,11 +50,11 @@ class CalendarDayItem
         get;
     internal var linkClickListener: View.OnClickListener? = null
     //    int layout;
-    internal var main_view_item: FrameLayout? = null
+    internal var main_view_item: RelativeLayout? = null
     internal var showDay: TextView? = null
     internal var spinner: Spinner? = null
     private var reminderText: TextView? = null
-    private var reminderLayout: FrameLayout? = null
+    private var reminderLayout: RelativeLayout? = null
     private val millies: Long
 
     val theyOfWeek: Int
@@ -63,13 +67,8 @@ class CalendarDayItem
         this.dayOfWeek = thisDay.persianWeekDayName
         millies = thisDay.timeInMillis
 
-        doAsync {
-            reminderCount = ReminderData.getAllForDay(millies).size
-            uiThread {
-                manageReminders()
+        doAsyncReminderRefresh()
 
-            }
-        }
         clickListener = ListItemClickListener<Any> { ValueContainer.value = day }
 
 //        clickListener = object : ClickableHolder.ListItemClickListener<Any> {
@@ -78,6 +77,18 @@ class CalendarDayItem
 //            }
 //        }
     }
+
+    private fun doAsyncReminderRefresh() {
+        doAsync {
+            reminderCount = ReminderData.getAllForDay(millies).size
+            uiThread {
+                manageReminders()
+
+            }
+        }
+    }
+
+    private var isSelected: Boolean = false
 
     override fun initializeView(view: View) {
         val startTime = System.nanoTime()
@@ -101,26 +112,33 @@ class CalendarDayItem
 //        }
         if (isLink)
             view.setOnClickListener(linkClickListener)
-        reminderText = view.reminder_count
-        reminderLayout = view.reminder_layout
+
+//        reminderText = view.reminder_count
+//        reminderLayout = view.reminder_layout
+//        circleBackground = view.circle_background
+//        dayOfWeekText = view.day_Of_week_text
+//        dayText = view.day_text
+        reminderText = findView(R.id.reminder_count) as TextView?
+        reminderLayout = findView(R.id.reminder_layout) as RelativeLayout?
+        circleBackground = findView(R.id.circle_background) as ImageView?
+        dayOfWeekText = findView(R.id.day_Of_week_text) as TextView?
+        dayText = findView(R.id.day_text) as TextView?
 
         manageReminders()
 
-        circleBackground = view.circle_background
-        dayOfWeekText = view.day_Of_week_text
-        dayText = view.day_text
         dayText!!.text = Utils.localeNumber(day.toString())
         dayOfWeekText!!.text = dayOfWeek
 
         if (layoutResourceID != R.layout.calendar_month_item) {
 
-            if (ValueContainer.value == day && !isLink) {
-
+            if (shouldBeSelected()) {
+                isSelected = true
                 circleBackground!!.visibility = View.VISIBLE
                 dayText!!.setTextColor(Color.WHITE)
                 //      Log.e("ddddddd",thisDay.getPersianDay()+"");
                 realDate.timeInMillis = thisDay.timeInMillis
             } else {
+                isSelected = false
 
                 circleBackground!!.visibility = View.GONE
                 dayText!!.setTextColor(Color.GRAY)
@@ -135,13 +153,16 @@ class CalendarDayItem
 
 
         } else {
-            main_view_item = view.findViewById(R.id.view_calendar)  //just month has it
+            main_view_item = findView(R.id.view_calendar) as RelativeLayout?  //just month has it
 
 
-            if (ValueContainer.value == day && !isLink) {
+            isSelected = if (shouldBeSelected()) {
                 main_view_item?.setBackgroundColor(Color.parseColor("#c0f9f3"))
+                //                setDateChangeListener()
+                true
             } else {
                 main_view_item?.setBackgroundResource(R.color.white)
+                false
             }
 
 
@@ -161,11 +182,57 @@ class CalendarDayItem
                 main_view_item?.setBackgroundResource(R.color.light_gray_clandar)
             }
         }
-//        SmartLogger.logDebug("took nothing"+initializeCount++ +"for"+thisDay.persianMonth)
+        SmartLogger.logDebug("took nothing" + initializeCount++ + "for" + thisDay.persianMonth)
         val endtTime = System.nanoTime()
         val endtTimeMili = System.currentTimeMillis()
 
         SmartLogger.logDebug("took " + (endtTime - startTime) + " millisecond and globally " + (endtTimeMili - globalMilli))
+    }
+
+    private fun shouldBeSelected(): Boolean = ValueContainer.value == day && !isLink
+
+
+    private fun setDateChangeListener() {
+//        ObserverList.getChangeDataObserver().addObserver(object:ObserverHandlerBase.Observer{
+//            override fun observeReminderChange() {
+//                initializeView(view)
+//                ObserverList.getChangeDataObserver().removeObserver(this)
+//            }
+//        })
+        ObserverList.getChangeDataObserver().addObserver(this)
+        ObserverList.getReminderObserver().addObserver(this)
+
+
+    }
+
+    override fun observeReminderChange(data: List<ReminderData>?) {
+        if (PersianCalendar(data!![0].date).persianDay == thisDay.persianDay)
+            doAsyncReminderRefresh()
+    }
+
+    override fun observeDateChange(data: PersianCalendar?) {
+        if (isSelected != shouldBeSelected())
+            initializeView(view)
+    }
+
+    private fun removeDateChangeObserver() {
+        ObserverList.getChangeDataObserver().removeObserver(this)
+        ObserverList.getReminderObserver().removeObserver(this)
+
+    }
+
+    override fun onHideItem() {
+        super.onHideItem()
+        removeDateChangeObserver()
+        showingItemCount--
+    }
+
+    override fun onShowItem() {
+        super.onShowItem()
+        setDateChangeListener()
+        showingItemCount++
+        SmartLogger.logDebug(showingItemCount.toString())
+
     }
 
     private fun manageReminders() {
@@ -193,6 +260,8 @@ class CalendarDayItem
     }
 
     companion object {
+        var showingItemCount = 0
+
         var initializeCount = 0
         var globalMilli: Long = 0L
 

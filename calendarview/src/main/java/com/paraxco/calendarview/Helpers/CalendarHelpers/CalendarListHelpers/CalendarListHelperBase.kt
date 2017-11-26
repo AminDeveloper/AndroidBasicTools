@@ -1,27 +1,32 @@
 package com.paraxco.calendarview.Helpers.CalendarHelpers.CalendarListHelpers
 
+import android.opengl.Visibility
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.LinearLayout
+import android.widget.ProgressBar
 import com.paraxco.calendarview.Fragments.CalendarFragments.CalendarPages.CalendarDateFragment
-import com.paraxco.calendarview.Helpers.Observers.ObserverHandlerBase
+import com.paraxco.calendarview.Helpers.Observers.ChangeDateObserverHandler
 import com.paraxco.calendarview.Helpers.Observers.ReminderObserverHandler
 import com.paraxco.calendarview.Interface.ValueContainer
 import com.paraxco.calendarview.Model.CalendarModels.CalendarDayItem
+import com.paraxco.calendarview.Model.CalendarModels.ReminderData
 import com.paraxco.commontools.Utils.SmartLogger
 import com.paraxco.commontools.Utils.Utils
 import com.paraxco.listtools.ListTools.Adapter.RecyclerView.RecyclerViewDataItemAdapter
+import com.paraxco.listtools.ListTools.DataItem.DataItemBase
 import ir.hamsaa.persiandatepicker.util.PersianCalendar
 import java.util.*
 
 /**
  * Created by Amin on 10/15/2017.
  */
-abstract class CalendarListHelperBase(persianCalendar: PersianCalendar, calendarDateFragment: CalendarDateFragment, internal var layout: Int) : ValueContainer<Int>, ObserverHandlerBase.Observer {
+abstract class CalendarListHelperBase(persianCalendar: PersianCalendar, calendarDateFragment: CalendarDateFragment, internal var layout: Int) : ValueContainer<Int>, ReminderObserverHandler.ReminderObserver, ChangeDateObserverHandler.ChangeDateObserver {
+
+
     var date: PersianCalendar
         internal set
-    internal var dayItemsAdapter:  RecyclerViewDataItemAdapter<*>? = null
+    internal var dayItemsAdapter: RecyclerViewDataItemAdapter<out DataItemBase<*>>? = null
     internal var recyclerView: RecyclerView? = null
     internal var calendarItems: LinkedList<CalendarDayItem>? = null
     internal var dateChangeListener: ValueContainer<PersianCalendar>? = null
@@ -36,35 +41,51 @@ abstract class CalendarListHelperBase(persianCalendar: PersianCalendar, calendar
     init {
         this.date = PersianCalendar(persianCalendar.timeInMillis)
     }
-
     fun visualizeOnRecyclerView(recyclerView: RecyclerView?) {
+        visualizeOnRecyclerView(recyclerView,null)
+
+    }
+
+    fun visualizeOnRecyclerView(recyclerView: RecyclerView?, progressBar: ProgressBar?) {
         this.recyclerView = recyclerView
         fillCalendarItems()
         if (calendarItems!!.size == 0)
             return
         checkFristDayOfWeek()
         checkLastDayOfWeek()
+
+        if(progressBar!=null) {
+//            recyclerView!!.visibility = View.GONE
+
+            recyclerView!!.addOnLayoutChangeListener { _, _, p2, p3, p4, p5, p6, _, _ ->
+                //                    progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
+        }
+
         dayItemsAdapter = getAdapter()
         SmartLogger.logDebug("took nothing after getAdapter")
         ReminderObserverHandler.instance.addObserver(this)
-//        ChangeDateObserverHandler.instance.addObserver(this)
+        ChangeDateObserverHandler.instance.addObserver(this)
         //        scrollToDay();
         //        if (dateChangeListener != null)
         //            dateChangeListener.setValue(persianCalendar);
     }
-    fun visualizeOnView(linearLayout: LinearLayout?) {
-        fillCalendarItems()
-        if (calendarItems!!.size == 0)
-            return
-        checkFristDayOfWeek()
-        checkLastDayOfWeek()
-        if (linearLayout != null) {
-            MonthsListHelper(calendarItems!!,linearLayout).doAsignments()
-        }
-        SmartLogger.logDebug("took nothing after getAdapter")
-        ReminderObserverHandler.instance.addObserver(this)
-    }
-    abstract fun getAdapter(): RecyclerViewDataItemAdapter<*>?
+
+//    fun visualizeOnView(linearLayout: LinearLayout?) {
+//        fillCalendarItems()
+//        if (calendarItems!!.size == 0)
+//            return
+//        checkFristDayOfWeek()
+//        checkLastDayOfWeek()
+//        if (linearLayout != null) {
+//            MonthsListHelper(calendarItems!!, linearLayout).doAsignments()
+//        }
+//        SmartLogger.logDebug("took nothing after getAdapter")
+//        ReminderObserverHandler.instance.addObserver(this)
+//    }
+
+    abstract fun getAdapter(): RecyclerViewDataItemAdapter<out DataItemBase<*>>?
 
     abstract fun fillCalendarItems()
     /**
@@ -72,16 +93,19 @@ abstract class CalendarListHelperBase(persianCalendar: PersianCalendar, calendar
      */
     abstract fun refreshRemindersList()
 
-    override fun observe() {
-//        date= dateChangeListener!!.value
+    override fun observeReminderChange(data: List<ReminderData>?) {
+//        date = dateChangeListener!!.value
         refreshRemindersList()//for reminder list
-//        dayItemsAdapter!!.notifyDataSetChanged()//for reminder counts
+//        dayItemsAdapter!!.notifyDataSetChanged()//for reminder counts    }
+    }
 
+    override fun observeDateChange(data: PersianCalendar?) {
+        refreshRemindersList()
     }
 
     fun removeObservers() {
         ReminderObserverHandler.instance.removeObserver(this)
-//        ChangeDateObserverHandler.instance.removeObserver(this)
+        ChangeDateObserverHandler.instance.removeObserver(this)
     }
 
     private fun checkFristDayOfWeek() {
@@ -120,8 +144,8 @@ abstract class CalendarListHelperBase(persianCalendar: PersianCalendar, calendar
         if (dateChangeListener != null)
             dateChangeListener!!.value = date
         //        todayTextView.setText(Utils.localeNumber(persianCalendar.getPersianShortDate()));
-        dayItemsAdapter!!.notifyItemChanged(getIndexOf(date))
-        dayItemsAdapter!!.notifyItemChanged(getIndexOf(lastDate))
+//        dayItemsAdapter!!.notifyItemChanged(getIndexOf(date))
+//        dayItemsAdapter!!.notifyItemChanged(getIndexOf(lastDate))
         refreshRemindersList()
     }
 
