@@ -3,13 +3,9 @@ package com.paraxco.listtools.ListTools.Adapter.RecyclerView;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
-import android.view.Gravity;
 import android.view.View;
 
-import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 import com.paraxco.commontools.Utils.SmartLogger;
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase;
 import com.paraxco.listtools.ListTools.Holder.RecyclerViewClickableHolder;

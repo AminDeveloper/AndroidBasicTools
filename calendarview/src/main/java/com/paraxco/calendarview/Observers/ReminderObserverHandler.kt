@@ -1,23 +1,25 @@
 package com.paraxco.calendarview.Helpers.Observers
 
 import com.paraxco.calendarview.Model.CalendarModels.ReminderData
+import com.paraxco.commontools.ObserverBase.ObserverHandlerBase
+import java.util.*
 
 /**
  * Created by Amin on 10/14/2017.
  */
 
 class ReminderObserverHandler private constructor() : ObserverHandlerBase<ReminderObserverHandler.ReminderObserver>() {
-    override fun informObserver(observe: ReminderObserver, data: Array<out Any>) {
-        observe.observeReminderChange((data[0] as List<ReminderData>))
+    override fun informObserverInternal(observe: ReminderObserver?, data: MutableList<Any>?) {
+        observe?.observeReminderChange((data!![0] as List<ReminderData>))
     }
 
-    fun informObservers(data: List<ReminderData>) {
-        super.informObservers(data)
+    public fun informObservers(data: LinkedList<ReminderData>) {
+        super.informObserverListInternal(data as List<Any>?)
     }
 
-    fun informObservers(data: ReminderData) {
-        val tempData = List(1, { data })
-        super.informObservers(tempData)
+    public fun informObservers(data: ReminderData) {
+//        val tempData = List(1, { data })
+        super.informObserverListInternal(data)//todo test it
     }
 
     private object Holder {

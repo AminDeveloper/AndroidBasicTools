@@ -17,12 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:layout_gravity="center"
-            />
+
         <!--<fragment-->
         <!--android:id="@+id/fragment"-->
         <!--android:layout_width="match_parent"-->

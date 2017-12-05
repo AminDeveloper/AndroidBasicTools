@@ -100,12 +100,7 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/calendar_list"
             android:layout_width="match_parent"

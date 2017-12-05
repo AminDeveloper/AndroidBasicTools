@@ -48,6 +48,4 @@ dependencies {
     compile project(':calendarview')
     compile project(':calendarview')
     compile project(':imagetools')
-
-
 }

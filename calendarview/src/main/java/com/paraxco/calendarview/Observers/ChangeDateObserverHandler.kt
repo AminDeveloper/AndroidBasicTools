@@ -1,5 +1,6 @@
 package com.paraxco.calendarview.Helpers.Observers
 
+import com.paraxco.commontools.ObserverBase.ObserverHandlerBase
 import ir.hamsaa.persiandatepicker.util.PersianCalendar
 
 /**
@@ -7,11 +8,12 @@ import ir.hamsaa.persiandatepicker.util.PersianCalendar
  */
 
 class ChangeDateObserverHandler private constructor() : ObserverHandlerBase<ChangeDateObserverHandler.ChangeDateObserver>() {
-    override fun informObserver(observe: ChangeDateObserver, data: Array<out Any>) {
-        observe.observeDateChange(data[0] as PersianCalendar)
+    override fun informObserverInternal(observe: ChangeDateObserver?, data: MutableList<Any>?) {
+        observe?.observeDateChange(data!![0] as PersianCalendar)
     }
+
     fun informObservers(persianCalendar:PersianCalendar){
-        super.informObservers(persianCalendar)
+        super.informObserverListInternal(persianCalendar)
     }
 
     private object Holder {

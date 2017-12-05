@@ -26,22 +26,22 @@ class ListToolsTest : BaseActivity() {
         setContentView(R.layout.list_tools_test)
 
         button.setOnClickListener {
-            var slidingDialogMenu= SlidingDialogMenu()
-            slidingDialogMenu.items.add(CustomItem(this,1))
-            slidingDialogMenu.items.add(CustomItem(this,2))
-            slidingDialogMenu.items.add(CustomItem(this,3))
-            slidingDialogMenu.items.add(CustomItem(this,4))
-            slidingDialogMenu.items.add(CustomItem(this,5))
-            slidingDialogMenu.items.add(CustomItem(this,6))
-            slidingDialogMenu.items.add(CustomItem(this,7))
-            slidingDialogMenu.items.add(CustomItem(this,8))
-            slidingDialogMenu.items.add(CustomItem(this,9))
-            slidingDialogMenu.show(supportFragmentManager)
+//            var slidingDialogMenu= SlidingDialogMenu()
+//            slidingDialogMenu.items.add(CustomItem(this,1))
+//            slidingDialogMenu.items.add(CustomItem(this,2))
+//            slidingDialogMenu.items.add(CustomItem(this,3))
+//            slidingDialogMenu.items.add(CustomItem(this,4))
+//            slidingDialogMenu.items.add(CustomItem(this,5))
+//            slidingDialogMenu.items.add(CustomItem(this,6))
+//            slidingDialogMenu.items.add(CustomItem(this,7))
+//            slidingDialogMenu.items.add(CustomItem(this,8))
+//            slidingDialogMenu.items.add(CustomItem(this,9))
+//            slidingDialogMenu.show(supportFragmentManager)
 
             var stringListSlidingMenue=StringListSlidingMenue()
             stringListSlidingMenue.setTitleList(arrayOf("a", "b", "c"))
 
-//            stringListSlidingMenue.show(supportFragmentManager)
+            stringListSlidingMenue.show(supportFragmentManager)
 
 
 

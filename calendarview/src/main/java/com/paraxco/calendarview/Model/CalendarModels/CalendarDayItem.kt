@@ -201,8 +201,6 @@ class CalendarDayItem
 //        })
         ObserverList.getChangeDataObserver().addObserver(this)
         ObserverList.getReminderObserver().addObserver(this)
-
-
     }
 
     override fun observeReminderChange(data: List<ReminderData>?) {

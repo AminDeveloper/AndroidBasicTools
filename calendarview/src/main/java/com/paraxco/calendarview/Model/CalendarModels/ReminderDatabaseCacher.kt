@@ -1,7 +1,6 @@
 package com.paraxco.calendarview.Model.CalendarModels
 
 import com.activeandroid.query.Select
-import com.paraxco.calendarview.Helpers.Observers.ObserverHandlerBase
 import com.paraxco.calendarview.Helpers.Observers.ReminderObserverHandler
 
 /**

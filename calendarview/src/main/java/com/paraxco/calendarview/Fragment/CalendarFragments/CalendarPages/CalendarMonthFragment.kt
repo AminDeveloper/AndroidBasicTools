@@ -96,9 +96,9 @@ class CalendarMonthFragment : CalendarDateFragment() {
         calendarHelper!!.setDateChangeListener(dateContainer!!)
 //        calendarHelper!!.visualizeOnView(customView?.findViewById(R.id.month_list))
         val recyclerView: RecyclerView = customView!!.findViewById(R.id.calendar_list)!!
-        val progressBar: ProgressBar = customView!!.findViewById(R.id.progressBar)!!
+//        val progressBar: ProgressBar = customView!!.findViewById(R.id.progressBar)!!
 
-        calendarHelper!!.visualizeOnRecyclerView(recyclerView,progressBar)
+        calendarHelper!!.visualizeOnRecyclerView(recyclerView)
         calendarHelper!!.setGotoWeekListener(object : CalendarListHelperBase.GotoWeekListener {
             override fun gotoWeek(persianCalendar: PersianCalendar) {
                 calendarMonthsFragment?.updateFragmentDate(persianCalendar!!)

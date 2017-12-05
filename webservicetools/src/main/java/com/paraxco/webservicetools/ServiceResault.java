@@ -1,4 +1,4 @@
-package com.paraxco.commontools.WebServiceTools;
+package com.paraxco.webservicetools;
 
 /**
  *
