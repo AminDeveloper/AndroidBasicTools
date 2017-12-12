@@ -2,6 +2,7 @@ package ir.hamsaa.persiandatepicker.view;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
@@ -56,6 +57,11 @@ public class PersianNumberPicker extends NumberPicker {
         if (view instanceof EditText) {
             if (typeFace != null) {
                 ((EditText) view).setTypeface(typeFace);
+                ((EditText) view).setTextSize(20);
+                ((EditText) view).setClickable(false);
+                ((EditText) view).setInputType(InputType.TYPE_NULL);
+                ((EditText) view).setFocusable(false);
+                ((EditText) view).setTextColor(getResources().getColor(android.R.color.black));
             }
         }
     }
