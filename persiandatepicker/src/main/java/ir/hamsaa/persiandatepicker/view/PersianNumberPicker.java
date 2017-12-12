@@ -55,13 +55,14 @@ public class PersianNumberPicker extends NumberPicker {
 
     private void updateView(View view) {
         if (view instanceof EditText) {
+            ((EditText) view).setTextSize(18);
+            ((EditText) view).setClickable(false);
+            ((EditText) view).setInputType(InputType.TYPE_NULL);
+            ((EditText) view).setFocusable(false);
+            ((EditText) view).setTextColor(getResources().getColor(android.R.color.black));
             if (typeFace != null) {
                 ((EditText) view).setTypeface(typeFace);
-                ((EditText) view).setTextSize(20);
-                ((EditText) view).setClickable(false);
-                ((EditText) view).setInputType(InputType.TYPE_NULL);
-                ((EditText) view).setFocusable(false);
-                ((EditText) view).setTextColor(getResources().getColor(android.R.color.black));
+
             }
         }
     }
