@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.paraxco.commontools.BroadCastReceiver.NetworkChangeReceiver;
+import com.paraxco.commontools.Observers.NetworkObserverHandler;
 import com.paraxco.commontools.R;
 import com.paraxco.commontools.Utils.Permision.PermisionUtils;
 import com.paraxco.commontools.Utils.Utils;
@@ -28,8 +29,7 @@ import java.util.Locale;
 /**
  *
  */
-
-public abstract class BaseActivity extends AppCompatActivity implements NetworkChangeReceiver.NetworkListener {
+public abstract class BaseActivity extends AppCompatActivity implements  NetworkObserverHandler.NetworkChangeObserver {
     private boolean showMessagesFromTop = false;
 
     private String[] permissions = new String[]{
@@ -98,14 +98,18 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
     @Override
     protected void onStart() {
         super.onStart();
-        NetworkChangeReceiver.registerObserver(getApplicationContext(), this);
+//        NetworkChangeReceiver.registerObserver(getApplicationContext(), this);
+        NetworkObserverHandler.getInstance().addObserver(this);
+
         chageConfiguration();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        NetworkChangeReceiver.unRegisterObserver(getApplicationContext(), this);
+//        NetworkChangeReceiver.unRegisterObserver(getApplicationContext(), this);
+        NetworkObserverHandler.getInstance().removeObserver(this);
+
 
     }
 
@@ -147,13 +151,17 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkC
 
 
     @Override
-    public void onNetworkStateChange(boolean connected) {
+    public void onNetworkStateChange(Boolean connected) {
         if (!connected)
             showNetworkSnakeBar();
         else
             dismisNetworkSnakeBar();
     }
 
+    @Override
+    public Context getContextForNetworkObserver() {
+        return getBaseContext();
+    }
 
     private void dismisNetworkSnakeBar() {
         if (networkSnakeBar != null)

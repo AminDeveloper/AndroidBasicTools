@@ -9,15 +9,14 @@ import android.support.v4.app.FragmentManager
 import android.support.v7.widget.ListPopupWindow
 import android.support.v7.widget.RecyclerView
 import android.view.*
-import com.paraxco.commontools.R
 import com.paraxco.listtools.ListTools.Adapter.RecyclerView.RecyclerViewDataItemAdapter
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase
-import com.paraxco.listtools.R.layout.simple_list
+import com.paraxco.listtools.R
 
 /**
  * Created by Amin on 8/8/2017.
  */
-public open class SlidingDialogMenu : DialogFragment() {
+ open class SlidingDialogMenu : DialogFragment() {
     val items = java.util.LinkedList<DataItemBase<*>>()
 
     private var recyclerView: RecyclerView? = null
@@ -26,7 +25,7 @@ public open class SlidingDialogMenu : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater!!.inflate(simple_list, container, false)
+        val view = inflater!!.inflate(R.layout.simple_list, container, false)
         recyclerView = view.findViewById(R.id.list)
         fillItems()
         adapter = RecyclerViewDataItemAdapter.initializeLinearRecyclerView(recyclerView, items) as RecyclerViewDataItemAdapter<DataItemBase<*>>?

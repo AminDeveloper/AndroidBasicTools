@@ -26,9 +26,7 @@ android {
         targetSdkVersion 26
         versionCode 10
         versionName "0.1.7"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
 
@@ -51,6 +49,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'com.android.support:design:26.1.0'
 
+        compile 'org.jetbrains.anko:anko-common:0.9'
 
     compile project(':commontools')
 //    compile 'com.github.rubensousa:gravitysnaphelper:1.3'

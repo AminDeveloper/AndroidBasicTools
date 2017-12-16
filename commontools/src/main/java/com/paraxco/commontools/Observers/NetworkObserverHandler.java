@@ -50,10 +50,10 @@ public class NetworkObserverHandler extends ObserverHandlerBase<NetworkObserverH
         super.addObserver(observer);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (getObserversCount() == 0)
-                observer.getContext().registerReceiver(networkChangeReceiver,
+                observer.getContextForNetworkObserver().registerReceiver(networkChangeReceiver,
                     new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         }
-        informObservers(Utils.isNetworkAvailable(observer.getContext()));
+        informObservers(Utils.isNetworkAvailable(observer.getContextForNetworkObserver()));
     }
 
     @Override
@@ -61,14 +61,14 @@ public class NetworkObserverHandler extends ObserverHandlerBase<NetworkObserverH
         super.removeObserver(observer);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (getObserversCount() == 0)
-                observer.getContext().unregisterReceiver(networkChangeReceiver);
+                observer.getContextForNetworkObserver().unregisterReceiver(networkChangeReceiver);
         }
     }
 
-    interface NetworkChangeObserver {
+    public interface NetworkChangeObserver {
         void onNetworkStateChange(Boolean connected);
 
-        Context getContext();
+        Context getContextForNetworkObserver();
     }
 }
 

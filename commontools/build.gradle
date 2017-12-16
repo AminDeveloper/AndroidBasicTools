@@ -13,7 +13,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 group 'com.paraxco'
 
-version '0.1.4'
+version '0.1.5'
 
 android {
     compileSdkVersion 26
@@ -21,8 +21,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 6
-        versionName "0.1.4"
+        versionCode 7
+        versionName "0.1.5"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,7 +30,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

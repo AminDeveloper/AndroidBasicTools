@@ -67,6 +67,8 @@ public class SmartLogger {
 
 
     private String getVersion() {
+        if(context==null)
+            return "No version(Not initialized use initLogger to initialize!)";
         PackageManager manager = context.getPackageManager();
         PackageInfo info = null;
         try {
