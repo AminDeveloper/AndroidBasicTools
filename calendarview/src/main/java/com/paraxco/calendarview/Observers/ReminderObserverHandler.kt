@@ -10,7 +10,7 @@ import java.util.*
 
 class ReminderObserverHandler private constructor() : ObserverHandlerBase<ReminderObserverHandler.ReminderObserver>() {
     override fun informObserverInternal(observe: ReminderObserver?, data: MutableList<Any>?) {
-        observe?.observeReminderChange((data!![0] as List<ReminderData>))
+        observe?.observeReminderChange((data!! as List<ReminderData>))
     }
 
     public fun informObservers(data: LinkedList<ReminderData>) {
@@ -18,8 +18,8 @@ class ReminderObserverHandler private constructor() : ObserverHandlerBase<Remind
     }
 
     public fun informObservers(data: ReminderData) {
-//        val tempData = List(1, { data })
-        super.informObserverListInternal(data)//todo test it
+        val tempData = List(1, { data })
+        super.informObserverListInternal(tempData)//todo test it
     }
 
     private object Holder {

@@ -51,12 +51,15 @@ dependencies {
 
         compile 'org.jetbrains.anko:anko-common:0.9'
 
-    compile project(':commontools')
+//    compile project(':commontools')
+    compile 'com.paraxco:commontools:0.1.5'
+
 //    compile 'com.github.rubensousa:gravitysnaphelper:1.3'
 
 
 }
 repositories {
+    maven { url "C:/Users/Amin/.m2/repository" } // mavenLocal()
 
     mavenCentral()
 }

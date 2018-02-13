@@ -33,6 +33,7 @@ dependencies {
     compile project(':listtools')
     compile project(':persiandatepicker')
 
-
-
+}
+repositories {
+    maven { url "C:/Users/Amin/.m2/repository" } // mavenLocal()
 }

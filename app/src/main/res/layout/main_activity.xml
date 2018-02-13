@@ -29,4 +29,10 @@
         android:layout_height="wrap_content"
         android:text="ImageToolsTest"
         android:textAllCaps="false" />
+    <Button
+        android:id="@+id/ObserverTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ObserverTest"
+        android:textAllCaps="false" />
 </LinearLayout>

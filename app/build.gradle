@@ -44,5 +44,7 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'com.android.support:design:26.1.0'
 
-
+    compile project(':commontools')
+    compile project(':calendarview')
+    compile project(':imagetools')
 }

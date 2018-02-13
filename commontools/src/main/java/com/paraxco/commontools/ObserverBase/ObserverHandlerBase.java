@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @param <OBSERVER_TYPE>
  */
-abstract public class ObserverHandlerBase<OBSERVER_TYPE> {
+abstract public class ObserverHandlerBase<OBSERVER_TYPE,OBSERVABLE_TYPE> {
 
     ConcurrentHashMap<OBSERVER_TYPE, Boolean> observerList = new ConcurrentHashMap();
     LinkedList<ObserverListChangeListener<OBSERVER_TYPE>> observerListChangeListeners = new LinkedList<>();
@@ -39,7 +39,7 @@ abstract public class ObserverHandlerBase<OBSERVER_TYPE> {
         }
     }
 
-    protected void informObserverListInternal(List<Object> data) {
+    protected void informObserverListInternal(OBSERVABLE_TYPE data) {
         synchronized (this) {
             SmartLogger.logDebug("observerList size:" + observerList.size());
 
@@ -48,12 +48,16 @@ abstract public class ObserverHandlerBase<OBSERVER_TYPE> {
             }
         }
     }
-
-    protected void informObserverListInternal(Object data) {
-        List<Object> tempList = new LinkedList<>();
-        tempList.add(data);
-        informObserverListInternal(tempList);
+    public void informObservers(OBSERVABLE_TYPE data){
+        informObserverListInternal(data);
     }
+
+
+//    protected void informObserverListInternal(OBSERVABLE_TYPE data) {
+//        List<Object> tempList = new LinkedList<>();
+//        tempList.add(data);
+//        informObserverListInternal(tempList);
+//    }
 
     private void callBackObserverListChangeListeners(boolean added, OBSERVER_TYPE observer) {
         for (ObserverListChangeListener observerListChangeListener : observerListChangeListeners)
@@ -65,12 +69,10 @@ abstract public class ObserverHandlerBase<OBSERVER_TYPE> {
 
     public void addObserverChangeListener(ObserverListChangeListener<OBSERVER_TYPE> observerListChangeListener) {
         observerListChangeListeners.add(observerListChangeListener);
-
     }
 
     public void removeObserverChangeListener(ObserverListChangeListener<OBSERVER_TYPE> observerListChangeListener) {
         observerListChangeListeners.remove(observerListChangeListener);
-
     }
 
     /**
@@ -79,7 +81,7 @@ abstract public class ObserverHandlerBase<OBSERVER_TYPE> {
      * @param observe
      * @param data
      */
-    abstract protected void informObserverInternal(OBSERVER_TYPE observe, List<Object> data);
+    abstract protected void informObserverInternal(OBSERVER_TYPE observe, OBSERVABLE_TYPE data);
 
 
     public interface ObserverListChangeListener<OBSERVER_TYPE> {

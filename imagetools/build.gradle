@@ -45,5 +45,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.github.bumptech.glide:glide:3.5.2'//use glide4
 
-    compile project(path: ':commontools')
+//    compile project(path: ':commontools')
+    compile 'com.paraxco:commontools:0.1.5'
+
+}
+repositories {
+    maven { url "C:/Users/Amin/.m2/repository" } // mavenLocal()
+
 }

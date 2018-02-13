@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Amin on 03/12/2017.
  */
 
-public class NetworkObserverHandler extends ObserverHandlerBase<NetworkObserverHandler.NetworkChangeObserver> {
+public class NetworkObserverHandler extends ObserverHandlerBase<NetworkObserverHandler.NetworkChangeObserver,Boolean> {
     static NetworkObserverHandler instance;
     static NetworkChangeReceiver networkChangeReceiver = new NetworkChangeReceiver();
 
@@ -29,14 +29,6 @@ public class NetworkObserverHandler extends ObserverHandlerBase<NetworkObserverH
 
     }
 
-    @Override
-    protected void informObserverInternal(NetworkChangeObserver observe, List<Object> data) {
-        observe.onNetworkStateChange((Boolean) data.get(0));
-    }
-
-    public void informObservers(Boolean connected) {
-        super.informObserverListInternal(connected);
-    }
 
     /**
      * notifies listener when network status changed
@@ -63,6 +55,11 @@ public class NetworkObserverHandler extends ObserverHandlerBase<NetworkObserverH
             if (getObserversCount() == 0)
                 observer.getContextForNetworkObserver().unregisterReceiver(networkChangeReceiver);
         }
+    }
+
+    @Override
+    protected void informObserverInternal(NetworkChangeObserver observe, Boolean data) {
+        observe.onNetworkStateChange(data);
     }
 
     public interface NetworkChangeObserver {
