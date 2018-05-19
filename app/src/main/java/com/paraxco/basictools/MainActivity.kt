@@ -8,6 +8,7 @@ import com.paraxco.basictools.CalendarView.CalendarViewTest
 import com.paraxco.basictools.Commontools.Observers.ObserverList
 import com.paraxco.basictools.Commontools.Observers.TestObserver
 import com.paraxco.commontools.Activities.BaseActivity
+import com.paraxco.commontools.Utils.SmartLogger
 import kotlinx.android.synthetic.main.main_activity.*
 
 
@@ -20,6 +21,7 @@ class MainActivity : BaseActivity(), TestObserver.ObserverTest {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SmartLogger.initLogger(applicationContext)
         setContentView(R.layout.main_activity)
         showListToolsTest.setOnClickListener({
             startListToolsTest()

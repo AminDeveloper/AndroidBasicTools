@@ -3,16 +3,9 @@ package com.paraxco.commontools.BroadCastReceiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.os.Build;
-
 
 import com.paraxco.commontools.Observers.NetworkObserverHandler;
 import com.paraxco.commontools.Utils.Utils;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *
@@ -24,8 +17,10 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getExtras() != null) {
-
-            NetworkObserverHandler.getInstance().informObservers(Utils.isNetworkAvailable(context));
+            Boolean currentState = Utils.isNetworkAvailable(context);
+            //to prevent multiple call from device
+            if (NetworkObserverHandler.getInstance().getData() != currentState)
+                NetworkObserverHandler.getInstance().informObservers(currentState);
 
 //            for (NetworkListener observer : observers)
 //                observer.onNetworkStateChange(Utils.isNetworkAvailable(context));

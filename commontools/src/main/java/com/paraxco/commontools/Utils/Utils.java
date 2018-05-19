@@ -8,8 +8,10 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -28,6 +30,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -40,7 +43,6 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.paraxco.commontools.Activities.BaseActivity;
@@ -48,9 +50,8 @@ import com.paraxco.commontools.R;
 import com.paraxco.commontools.Utils.Permision.PermisionUtils;
 
 import java.io.File;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Locale;
 
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 
 /**
@@ -60,6 +61,47 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class Utils {
 
     public static final String NOTIFICATION_COMMON_DATA = "notification_common_data";
+    public static ContextWrapper wrap(Context context, String language) {
+        Configuration config = context.getResources().getConfiguration();
+        Locale sysLocale = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            sysLocale = getSystemLocale(config);
+        } else {
+            sysLocale = getSystemLocaleLegacy(config);
+        }
+        if (!language.equals("") && !sysLocale.getLanguage().equals(language)) {
+            Locale locale = new Locale(language);
+            Locale.setDefault(locale);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                setSystemLocale(config, locale);
+            } else {
+                setSystemLocaleLegacy(config, locale);
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                context = context.createConfigurationContext(config);
+            } else {
+                context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
+            }
+        }
+        return new ContextWrapper(context);
+    }
+
+    public static Locale getSystemLocaleLegacy(Configuration config) {
+        return config.locale;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static Locale getSystemLocale(Configuration config) {
+        return config.getLocales().get(0);
+    }
+
+    public static void setSystemLocaleLegacy(Configuration config, Locale locale) {
+        config.locale = locale;
+    }
+
+    public static void setSystemLocale(Configuration config, Locale locale) {
+        config.setLocale(locale);
+    }
 
     /**
      * Kill the app either safely or quickly. The app is killed safely by

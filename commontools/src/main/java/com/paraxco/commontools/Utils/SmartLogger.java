@@ -22,33 +22,55 @@ public class SmartLogger {
     public static void logDebug(String msg) {
         getInstance().instanceLogDebug(msg);
     }
+
+    public static void logError(String msg) {
+        getInstance().instanceLogDebug(msg);
+    }
+
+
     public static void logDebug() {
         getInstance().instanceLogDebug("");
     }
 
-    private Context context = null;
+    private static Context context = null;
+    private static String classPrifix = "";
 
     private String LOGGER_NAME = "SmartLogger";
 
-    void initLogger(Context context) {
-        this.context = context;
+    public static void initLogger(Context contextValue) {
+        context = contextValue;
     }
 
-    void releaseContext() {
+    public static void setClassPrefix(String prefix) {
+        classPrifix = prefix;
+    }
+
+    public static void releaseContext() {
         context = null;
     }
 
     public void instanceLogDebug(String msg) {
-        Logger.getLogger(LOGGER_NAME).warning(getHeaders() + msg);
+        if (getElement().getClassName().startsWith(classPrifix))
+            Logger.getLogger(LOGGER_NAME).warning(" \n" + getLogDivider() + "\n" + getHeaders() + "\n" + msg + "\n" + getLogDivider());
+//        Logger.getLogger("fg").log(Level.ALL,"l");
+//        Logger.getLogger("fg").log(Level.ALL,"l");
     }
 
     private String getHeaders() {
         //todo add real instance class name
         StackTraceElement element = getElement();
         String className = element.getClassName();
-        String methodName = element.getClassName();
+        String methodName = element.getMethodName();
         String lineNumber = String.valueOf(element.getLineNumber());
-        return className+"\n"+methodName+"(Line:"+lineNumber+") Version:"+getVersion()+"+\n";
+        return "Class:  " + className + "\n" + "Method: " + methodName + "(Line: " + lineNumber + ") Version:" + getVersion() + "\n" + getMessageDivider();
+    }
+
+    private String getMessageDivider() {
+        return "**************************************************************************************************************";
+    }
+
+    private String getLogDivider() {
+        return "--------------------------------------------------------------------------------------------------------------";
     }
 
     private StackTraceElement getElement() {
@@ -67,7 +89,7 @@ public class SmartLogger {
 
 
     private String getVersion() {
-        if(context==null)
+        if (context == null)
             return "No version(Not initialized use initLogger to initialize!)";
         PackageManager manager = context.getPackageManager();
         PackageInfo info = null;

@@ -5,11 +5,18 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/calendarview" />
+            <option value="$PROJECT_DIR$/commontools" />
+            <option value="$PROJECT_DIR$/formtools" />
+            <option value="$PROJECT_DIR$/imagetools" />
+            <option value="$PROJECT_DIR$/listtools" />
+            <option value="$PROJECT_DIR$/maptools" />
             <option value="$PROJECT_DIR$/persiandatepicker" />
+            <option value="$PROJECT_DIR$/webservicetools" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

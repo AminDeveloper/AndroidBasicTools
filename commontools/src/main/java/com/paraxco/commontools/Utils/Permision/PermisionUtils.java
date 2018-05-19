@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Amin on 9/20/2017.
+ * should be used inside activity like baseActivity
  */
 
 public class PermisionUtils {

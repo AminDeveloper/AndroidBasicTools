@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 
 /**
- *
+ * add permission
+ *    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+ * to manifests and request it in an activity
  */
 
 public class SmsReceiver extends BroadcastReceiver {

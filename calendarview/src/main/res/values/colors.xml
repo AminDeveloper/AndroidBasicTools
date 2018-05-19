@@ -37,7 +37,7 @@
 
     <color name="back_progress_high">#004D40</color>
     <color name="back_progress_medium">#FF3D00</color>
-    <color name="back_progress_low">#D50000</color>
+    <color name="back_progress_low">#d50000</color>
 
 
     <color name="red_you">#ff4d4d</color>

@@ -13,7 +13,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 group 'com.paraxco'
 
-version '0.2.1'
+version '0.2.10'
 
 android {
     compileSdkVersion 26
@@ -21,8 +21,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 8
-        versionName "0.2.1"
+        versionCode 17
+        versionName "0.2.10"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -45,8 +45,8 @@ dependencies {
 //    androidTestImplementation 'com.android.support.test:runner:1.0.1'
 //    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-//    compile 'org.jetbrains.anko:anko-common:0.9'
-//    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile 'org.jetbrains.anko:anko-common:0.9'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 //    compile 'com.android.support:design:26.1.0'
 

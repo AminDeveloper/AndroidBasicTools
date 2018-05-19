@@ -1,11 +1,6 @@
 package com.paraxco.commontools.Fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.View;
-
-import com.paraxco.commontools.Activities.BaseActivity;
 
 
 /**
@@ -33,11 +28,11 @@ public abstract class BaseFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
     }
 
-    protected void showMessage(int res) {
-        if (getActivity() == null)
-            return;
-        ((BaseActivity) getActivity()).showMessage(res);
-    }
+//    protected void showMessage(int res) {
+//        if (getActivity() == null)
+//            return;
+//        ((BaseActivity) getActivity()).showMessage(res);
+//    }
 
     protected boolean isAttached() {
         return getActivity() != null;
