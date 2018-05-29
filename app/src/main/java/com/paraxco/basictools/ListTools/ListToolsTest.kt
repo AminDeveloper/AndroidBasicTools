@@ -7,11 +7,14 @@ import com.paraxco.basictools.ListTools.Model.CustomItem
 import com.paraxco.basictools.R
 import com.paraxco.calendarview.Fragments.CalendarFragments.StringListSlidingMenue
 import com.paraxco.commontools.Activities.BaseActivity
+import com.paraxco.commontools.Observers.RetryHelper
 import com.paraxco.listtools.ListTools.Adapter.RecyclerView.RecyclerViewDataItemAdapter
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase
 import kotlinx.android.synthetic.main.list_tools_test.*
 import com.paraxco.commontools.Utils.Permision.PermisionUtils
-import com.paraxco.listtools.ListTools.Dialog.SlidingDialogMenu
+import org.jetbrains.anko.contentView
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 /**
@@ -24,6 +27,7 @@ class ListToolsTest : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.list_tools_test)
+
 
         button.setOnClickListener {
 //            var slidingDialogMenu= SlidingDialogMenu()
@@ -38,8 +42,39 @@ class ListToolsTest : BaseActivity() {
 //            slidingDialogMenu.items.add(CustomItem(this,9))
 //            slidingDialogMenu.show(supportFragmentManager)
 
-            var stringListSlidingMenue=StringListSlidingMenue()
-            stringListSlidingMenue.setTitleList(arrayOf("a", "b", "c"))
+
+
+
+
+//            val retryHelper = RetryHelper(this)
+//
+//            retryHelper.initializeAndCall {
+//
+//                }
+//
+//                doAsync {
+////                    Thread.sleep(1000)
+//                    uiThread {
+//                        retryHelper.retry()
+//                    }
+//                    Thread.sleep(1000)
+//                    uiThread {
+//                        RetryHelper.startNoDialogSection()
+//                    }
+//
+//                    Thread.sleep(5000)
+//                    uiThread {
+//                        RetryHelper.endNoDialogSection(this@ListToolsTest)
+//                    }
+//
+//            }
+
+
+
+
+
+            var stringListSlidingMenue= StringListSlidingMenue()
+            stringListSlidingMenue.setTitleList(arrayListOf("a", "b", "c"))
 
             stringListSlidingMenue.show(supportFragmentManager)
 

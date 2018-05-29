@@ -1,4 +1,4 @@
-package com.parax.tiro.Helper
+package com.paraxco.commontools.Observers;
 
 import android.app.Dialog
 import android.content.Context
@@ -6,7 +6,6 @@ import android.os.Handler
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import com.paraxco.commontools.Observers.NetworkObserverHandler
 import com.paraxco.commontools.R
 import com.paraxco.commontools.Utils.SmartLogger
 import com.paraxco.commontools.Utils.Utils
@@ -29,10 +28,91 @@ class RetryHelper(val context: Context, var numOfFinished: Int = 1) : NetworkObs
             return instance
         }
 
+        var networkErrorDialog = R.layout.network_error_dialog
+
         private var dialog: Dialog? = null
         private var dismissed = false//in each timee network connects just show it once and if dialog dismissed by user do not show it again unless network is connected and disconnected again
-        val networkErrorDialog=R.layout.network_error_dialog
 
+        private var wasShowing = false//dialog was showing before dialog section start or during dialog section
+        private var inNoDialogSection = false
+
+        //Pause
+        private var paused=false
+
+        private var retryDuringPause=false //retry has been called after pause
+        /**
+         * dismiss dialog and no longer show until endNoDialogSection() is called
+         */
+        fun startNoDialogSection() {
+            inNoDialogSection = true
+
+            if (dialog != null && dialog!!.isShowing) {
+                dismisLoading()
+                wasShowing = true
+            } else
+                wasShowing = false
+
+//            wasDismissed = dismissed
+        }
+
+        /**
+         * show dialog if was showing before startNoDialogSection() and shows dialog if needded from now
+         */
+        fun endNoDialogSection(context: Context) {
+            inNoDialogSection = false
+//            SmartLogger.logDebug(wasDismissed.toString())
+            SmartLogger.logDebug((dialog != null).toString())
+            SmartLogger.logDebug(wasShowing.toString())
+
+            if (wasShowing) {
+                showDialog(context)
+                wasShowing = false
+            }
+
+        }
+
+        fun dismisLoading() {
+
+            if (dialog != null && dialog!!.isShowing)
+                try {
+                    dialog?.dismiss()
+                } catch (e: IllegalArgumentException) {
+                    e.printStackTrace()
+                }
+        }
+
+        fun showDialog(context: Context) {
+            if (inNoDialogSection) {
+                if (!dismissed)
+                    wasShowing = true
+                return
+            }
+            if (!dismissed && (dialog == null || !dialog!!.isShowing)) {
+                dialog = Dialog(context, R.style.DialogStyle)
+                //        alert.setTitle(title);
+                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog?.setContentView(networkErrorDialog)
+                dialog?.setCanceledOnTouchOutside(true)
+                dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                        WindowManager.LayoutParams.MATCH_PARENT)
+                dialog?.findViewById<View>(R.id.layMain)?.setOnClickListener {
+                    dismisLoading()
+                }
+                dialog?.setOnDismissListener {
+                    if (!inNoDialogSection)
+                        dismissed = true
+//                    wasDismissed = true
+//                    wasShowing = false
+                }
+//            dialog?.setCancelable(false)
+                try {
+                    dialog?.show()
+
+                } catch (exception: Exception) {
+                    exception.printStackTrace()
+                }
+            }
+        }
 
     }
 
@@ -47,19 +127,33 @@ class RetryHelper(val context: Context, var numOfFinished: Int = 1) : NetworkObs
     fun retry() {
         retry(true)
     }
+    fun pauseRetry(){
+        paused=true
+    }
+
+    fun resumeRetry(){
+        paused=false
+        if(retryDuringPause)
+            retry()
+    }
 
     private var calling = AtomicBoolean(false)
     /**
      * call it when something has gone wrong and retry needed
      */
     fun retry(whithDelay: Boolean) {
+        if(paused){
+            retryDuringPause=true
+            return
+        }
+
         if (!enabled) {
             NetworkObserverHandler.getInstance().removeObserver(this)
             return
         }
         if (calling.getAndSet(true))
             return
-        showDialog()
+        showDialog(context)
 
 
         SmartLogger.logDebug("retry")
@@ -70,7 +164,7 @@ class RetryHelper(val context: Context, var numOfFinished: Int = 1) : NetworkObs
                     return@postDelayed
                 calling.set(false)
 //                GamerCity.currentActivity.runOnUiThread({
-                    call?.invoke()
+                call?.invoke()
 
 //                })
                 SmartLogger.logDebug("invoked")
@@ -93,41 +187,6 @@ class RetryHelper(val context: Context, var numOfFinished: Int = 1) : NetworkObs
         }
     }
 
-    fun showDialog() {
-        if (!dismissed && (dialog == null || !dialog!!.isShowing)) {
-            dialog = Dialog(context, R.style.DialogStyle)
-            //        alert.setTitle(title);
-            dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog?.setContentView(networkErrorDialog)
-            dialog?.setCanceledOnTouchOutside(true)
-            dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-                    WindowManager.LayoutParams.MATCH_PARENT)
-            dialog?.findViewById<View>(R.id.layMain)?.setOnClickListener {
-                dismisLoading()
-            }
-            dialog?.setOnDismissListener {
-                dismissed = true
-            }
-//            dialog?.setCancelable(false)
-            try {
-                dialog?.show()
-
-            } catch (exception: Exception) {
-                exception.printStackTrace()
-            }
-        }
-    }
-
-    fun dismisLoading() {
-        if (dialog == null)
-            return
-        if (dialog!!.isShowing)
-            try {
-                dialog?.dismiss()
-            } catch (e: IllegalArgumentException) {
-                e.printStackTrace()
-            }
-    }
 
     override fun getContextForNetworkObserver(): Context {
         return context

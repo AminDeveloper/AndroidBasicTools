@@ -59,7 +59,7 @@ class StringListSlidingMenue : SlidingDialogMenu() {
 //        })
     }
 
-    public fun setTitleList(titles: List<String>) {
+    public fun setTitleList(titles: List<String>, textSize: Float?=null) {
 
         titleList = titles
         titleList?.forEach {
@@ -67,6 +67,8 @@ class StringListSlidingMenue : SlidingDialogMenu() {
                 override fun initializeView(view: View?) {
                     var textView = view!!.findViewById<TextView>(menu_item)
                     textView.text = it
+                    if (textSize != null)
+                        textView.textSize = textSize
                     view.setOnClickListener(View.OnClickListener { viwe: View? ->
                         selectListener?.onItemSelected(titleList!!.indexOf(it))
                         dialog.dismiss()
@@ -76,6 +78,14 @@ class StringListSlidingMenue : SlidingDialogMenu() {
             })
         }
     }
+
+    public fun setListItems(titles: List<DataItemBase<Any>>) {
+
+        items.clear()
+        items.addAll(titles)
+
+    }
+
 
     public fun setTitleList(titles: Array<String>) {
         setTitleList(titles.asList())

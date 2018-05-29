@@ -1,8 +1,8 @@
 package com.paraxco.commontools.Utils.LazyLoader
 
 import android.support.v4.widget.NestedScrollView
-import com.parax.tiro.Observers.CommandObserver
-import com.parax.tiro.Observers.ObserverListContainer
+import com.paraxco.commontools.Observers.CommandObserver
+import com.paraxco.commontools.Observers.ObserverListContainer
 
 class NestedScrollObserver : CommandObserver<NestedScrollView.OnScrollChangeListener>() {
     companion object {

@@ -18,9 +18,9 @@ import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : BaseActivity(), TestObserver.ObserverTest {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         SmartLogger.initLogger(applicationContext)
         setContentView(R.layout.main_activity)
         showListToolsTest.setOnClickListener({
@@ -36,9 +36,11 @@ class MainActivity : BaseActivity(), TestObserver.ObserverTest {
             startImageToolsTest()
         })
         ObserverTest.setOnClickListener({
-            ObserverList.getTestObserver().informObservers(listOf("abc","cde"))
+            ObserverList.getTestObserver().informObservers(listOf("abc", "cde"))
         })
         ObserverList.getTestObserver().addObserver(this)
+
+
     }
 
     override fun onDestroy() {
@@ -65,7 +67,6 @@ class MainActivity : BaseActivity(), TestObserver.ObserverTest {
     }
 
     private fun startNotificationBadgeTest() {
-
         val myIntent = Intent(this, NotificationBadgeTest::class.java)
 //        myIntent.putExtra("key", value) //Optional parameters
         this.startActivity(myIntent)
