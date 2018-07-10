@@ -70,7 +70,6 @@ public class NetworkObserverHandler extends StatefullObserverHandler<NetworkObse
 
     public interface NetworkChangeObserver {
         void onNetworkStateChange(Boolean connected);
-
         Context getContextForNetworkObserver();
     }
 }

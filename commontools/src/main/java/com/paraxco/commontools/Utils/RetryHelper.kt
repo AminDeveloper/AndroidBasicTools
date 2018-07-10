@@ -39,7 +39,7 @@ class RetryHelper(val context: Context, var numOfFinished: Int = 1) : NetworkObs
         //Pause
         private var paused=false
 
-        private var retryDuringPause=false //retry has been called after pause
+        private var retriedDuringPause=false //retry has been called after pause
         /**
          * dismiss dialog and no longer show until endNoDialogSection() is called
          */
@@ -133,7 +133,7 @@ class RetryHelper(val context: Context, var numOfFinished: Int = 1) : NetworkObs
 
     fun resumeRetry(){
         paused=false
-        if(retryDuringPause)
+        if(retriedDuringPause)
             retry()
     }
 
@@ -143,7 +143,7 @@ class RetryHelper(val context: Context, var numOfFinished: Int = 1) : NetworkObs
      */
     fun retry(whithDelay: Boolean) {
         if(paused){
-            retryDuringPause=true
+            retriedDuringPause=true
             return
         }
 

@@ -1,8 +1,11 @@
 package com.paraxco.commontools.Utils.LazyLoader
 
+import android.content.Context
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.paraxco.commontools.Observers.NestedScrollObserver
+import com.paraxco.commontools.Observers.RetryHelper
 import com.paraxco.commontools.Utils.SmartLogger
 
 /**
@@ -13,12 +16,15 @@ class LazyLoaderHelper {
     private var currentIndex = 0
     private var loadingService = false
     private val loadRegion = 4//item count to start loading more for recycler view
-    val stepCount = 20
+    var stepCount = 20//just change it before start
+        private set
+
     private var loaderMethod: ((currentIndex: Int) -> Any)? = null
     private var finished = false
     private var recyclerView: RecyclerView? = null
     private var nestedScrollView: NestedScrollView? = null
     var ProgressBar: View? = null
+    var retryHelper:RetryHelper?=null
 
     val nestedListener = NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
         if (finished)
@@ -113,65 +119,88 @@ class LazyLoaderHelper {
 //        return false
     }
 
-    fun initAndStart(mRecyclerView: RecyclerView, loaderMethod: ((currentIndex: Int) -> Any),progressBar: View?=null) {
+    fun initAndStart(mRecyclerView: RecyclerView, loaderMethod: ((currentIndex: Int) -> Any), progressBar: View? = null, stepCount: Int? = null) {
+        stepCount?.let {
+            this.stepCount = stepCount
+        }
         initFields()
         this.loaderMethod = loaderMethod
         this.recyclerView = mRecyclerView
+        retryHelper =RetryHelper(mRecyclerView.context)
+
         mRecyclerView.addOnScrollListener(recyclerListener)
         loadMoreItems()
-        this.ProgressBar=progressBar
+        this.ProgressBar = progressBar
+
     }
 
     private fun initFields() {
         nestedScrollView = null
         recyclerView = null
-        currentIndex = 0
+        currentIndex = -stepCount
         loadingService = false
-        ProgressBar?.visibility=View.GONE
-        ProgressBar=null
+        ProgressBar?.visibility = View.GONE
+        ProgressBar = null
         finishedLazyLoading()
 
         finished = false
     }
 
 
-    fun initAndStart(nestedScrollView: NestedScrollView, loaderMethod: ((currentIndex: Int) -> Any),progressBar: View?=null) {
+    fun initAndStart(nestedScrollView: NestedScrollView, loaderMethod: ((currentIndex: Int) -> Any), progressBar: View? = null) {
         initFields()
         this.loaderMethod = loaderMethod
         this.nestedScrollView = nestedScrollView
+        retryHelper =RetryHelper(nestedScrollView.context)
 
         NestedScrollObserver.getInstance(nestedScrollView).addObserver(nestedListener)
         loadMoreItems()
-        this.ProgressBar=progressBar
+        this.ProgressBar = progressBar
 
     }
 
-    private fun loadMoreItems() {
+    private fun loadMoreItems(addIndex: Boolean = true) {
         if (!loadingService && !finished) {
             loadingService = true
-            ProgressBar?.visibility= View.VISIBLE
-            loaderMethod?.invoke(currentIndex)
-            currentIndex += stepCount
+            ProgressBar?.visibility = View.VISIBLE
+            if (addIndex)
+                currentIndex += stepCount
+            retryHelper!!.initializeAndCall { loaderMethod?.invoke(currentIndex) }
+
         }
     }
 
     fun serviceLoaded() {
         loadingService = false
-        ProgressBar?.visibility= View.GONE
-
+        ProgressBar?.visibility = View.GONE
         checkIsScrollable()
+    }
 
+    fun retryLastSection() {
+        if (!finished) {
+//            Thread.sleep(delay)
+//            loadingService = false
+//            loadMoreItems(false)
+            retryHelper?.retry()
+        }
+    }
+    fun pauseRetry(){
+        retryHelper?.pauseRetry()
+    }
+    fun resumeRetry(){
+        retryHelper?.resumeRetry()
     }
 
 
     fun finishedLazyLoading() {
         finished = true
-        ProgressBar?.visibility= View.GONE
+        ProgressBar?.visibility = View.GONE
 
         nestedScrollView?.let {
             NestedScrollObserver.getInstance(nestedScrollView!!).removeObserver(nestedListener)
         }
         recyclerView?.removeOnScrollListener(recyclerListener)
+        retryHelper?.finished()
     }
 
     fun removeObservers() {

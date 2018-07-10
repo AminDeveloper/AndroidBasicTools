@@ -1,15 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.paraxco.imagetools">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application>
+        <!--tools:replace="android:authorities"-->
+
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.basictools.imagetools.fileprovider"
+            android:name=".Utils.ImageToolsProvider"
+            android:authorities="com.paraxco.imagetools.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths">
