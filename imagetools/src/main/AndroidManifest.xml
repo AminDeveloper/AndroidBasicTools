@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.paraxco.imagetools">
+    package="ir.mo.amin.hosseini.imagetools">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -10,7 +10,7 @@
 
         <provider
             android:name=".Utils.ImageToolsProvider"
-            android:authorities="com.paraxco.imagetools.fileprovider"
+            android:authorities="ir.mo.amin.hosseini.imagetools.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true"
             >

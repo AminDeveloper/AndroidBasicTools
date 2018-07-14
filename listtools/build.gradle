@@ -13,7 +13,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'kotlin-android'
 
 version '0.1.10'
-group 'com.paraxco'
+group 'ir.mo.amin.hosseini'
 
 
 android {
@@ -52,7 +52,7 @@ dependencies {
     implementation 'org.jetbrains.anko:anko-common:0.9'
 
 //    compile project(':commontools')
-    implementation 'com.paraxco:commontools:0.1.5'
+    implementation 'ir.mo.amin.hosseini:commontools:0.1.5'
 
 //    compile 'com.github.rubensousa:gravitysnaphelper:1.3'
 

@@ -116,11 +116,11 @@
             <!--android:id="@+id/month_list"-->
             <!--layout="@layout/month_item_list"/>-->
 
-        <!--<com.paraxco.calendarview.Helpers.NotList.CustomMonthItemsView-->
+        <!--<ir.mo.amin.hosseini.calendarview.Helpers.NotList.CustomMonthItemsView-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent">-->
 
-        <!--</com.paraxco.calendarview.Helpers.NotList.CustomMonthItemsView>-->
+        <!--</ir.mo.amin.hosseini.calendarview.Helpers.NotList.CustomMonthItemsView>-->
 
         <TextView
             android:id="@+id/today_text_view"

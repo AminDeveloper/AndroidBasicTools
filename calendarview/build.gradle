@@ -14,7 +14,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 version '0.0.11'
-group 'com.paraxco'
+group 'ir.mo.amin.hosseini'
 
 android {
     compileSdkVersion 27
@@ -52,7 +52,7 @@ dependencies {
 
     implementation project(':listtools')
 //    compile project(':commpontools')
-    implementation 'com.paraxco:commontools:0.1.5'
+    implementation 'ir.mo.amin.hosseini:commontools:0.1.5'
 
 
 }

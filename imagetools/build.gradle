@@ -13,7 +13,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'kotlin-android'
 
 version '0.0.4'
-group 'com.paraxco'
+group 'ir.mo.amin.hosseini'
 
 android {
     compileSdkVersion 27
@@ -49,8 +49,8 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:3.1.0'
 
 
-//  implementation project(path: ':commontools')
-    implementation 'com.paraxco:commontools:0.3.6'
+  implementation project(path: ':commontools')
+//    implementation 'ir.mo.amin.hosseini:commontools:0.3.6'
 
 }
 repositories {

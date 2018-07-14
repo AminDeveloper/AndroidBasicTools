@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!--<com.paraxco.app63167.CustomView.ViewpagerCustom-->
+            <!--<ir.mo.amin.hosseini.app63167.CustomView.ViewpagerCustom-->
             <!--android:layout_weight="1"-->
             <!--android:id="@+id/calendar_pager"-->
             <!--android:layout_width="match_parent"-->
