@@ -7,9 +7,13 @@ import com.paraxco.basictools.Activities.ListTools.ListToolsTest
 import com.paraxco.basictools.CalendarView.CalendarViewTest
 import com.paraxco.basictools.Commontools.Observers.ObserverList
 import com.paraxco.basictools.Commontools.Observers.TestObserver
+import com.paraxco.basictools.ImageTools.Dialog.MyCustomDialog
 import com.paraxco.commontools.Activities.BaseActivity
+import com.paraxco.commontools.Observers.RetryHelper
 import com.paraxco.commontools.Utils.SmartLogger
 import kotlinx.android.synthetic.main.main_activity.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 /**
@@ -17,6 +21,7 @@ import kotlinx.android.synthetic.main.main_activity.*
  */
 
 class MainActivity : BaseActivity(), TestObserver.ObserverTest {
+    var retryHelper:RetryHelper?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +45,27 @@ class MainActivity : BaseActivity(), TestObserver.ObserverTest {
         })
         ObserverList.getTestObserver().addObserver(this)
 
+        RetryHelperTest.setOnClickListener {
+            retryHelper = RetryHelper.getInstanceAndCall(this,{
+                SmartLogger.logDebug("doing ...")
+                Thread.sleep(500)
+               retry()
+            })
+        }
+        DialogTest.setOnClickListener {
+            var myCustomDialog=MyCustomDialog()
+            myCustomDialog.showDialog(this)
+        }
+    }
 
+    private fun retry() {
+        doAsync {
+            uiThread {
+                retryHelper!!.retry()
+
+            }
+
+        }
     }
 
     override fun onDestroy() {

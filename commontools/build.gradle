@@ -13,7 +13,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 group 'com.paraxco'
 
-version '0.3.6'
+version '0.4.0'
 
 android {
     compileSdkVersion 27
@@ -22,8 +22,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 26
-        versionName "0.3.6"
+        versionCode 27
+        versionName "0.4.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -59,6 +59,10 @@ dependencies {
 //    compile project(':persiandatepicker')
 
     implementation "me.leolin:ShortcutBadger:1.1.19@aar"
+
+    //Android architecture components
+    def lifecycle_version = "1.1.0"
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
 
 
 }

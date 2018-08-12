@@ -10,7 +10,7 @@
 
         <provider
             android:name=".Utils.ImageToolsProvider"
-            android:authorities="com.paraxco.imagetools.fileprovider"
+            android:authorities="com.paraxco.imagetools.${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true"
             >

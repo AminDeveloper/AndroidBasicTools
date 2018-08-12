@@ -1,6 +1,6 @@
 package com.paraxco.commontools.Utils.LazyLoader
 
-import android.content.Context
+import android.arch.lifecycle.LifecycleOwner
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -24,7 +24,8 @@ class LazyLoaderHelper {
     private var recyclerView: RecyclerView? = null
     private var nestedScrollView: NestedScrollView? = null
     var ProgressBar: View? = null
-    var retryHelper:RetryHelper?=null
+    var retryHelper: RetryHelper? = null
+    var lifecycleOwner: LifecycleOwner? = null
 
     val nestedListener = NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
         if (finished)
@@ -119,14 +120,15 @@ class LazyLoaderHelper {
 //        return false
     }
 
-    fun initAndStart(mRecyclerView: RecyclerView, loaderMethod: ((currentIndex: Int) -> Any), progressBar: View? = null, stepCount: Int? = null) {
+    fun initAndStart(mRecyclerView: RecyclerView, loaderMethod: ((currentIndex: Int) -> Any), progressBar: View? = null, stepCount: Int? = null, lifecycleOwner: LifecycleOwner? = null) {
         stepCount?.let {
             this.stepCount = stepCount
         }
         initFields()
         this.loaderMethod = loaderMethod
         this.recyclerView = mRecyclerView
-        retryHelper =RetryHelper(mRecyclerView.context)
+        retryHelper = RetryHelper(mRecyclerView.context)
+        this.lifecycleOwner=lifecycleOwner
 
         mRecyclerView.addOnScrollListener(recyclerListener)
         loadMoreItems()
@@ -147,11 +149,12 @@ class LazyLoaderHelper {
     }
 
 
-    fun initAndStart(nestedScrollView: NestedScrollView, loaderMethod: ((currentIndex: Int) -> Any), progressBar: View? = null) {
+    fun initAndStart(nestedScrollView: NestedScrollView, loaderMethod: ((currentIndex: Int) -> Any), progressBar: View? = null, lifecycleOwner: LifecycleOwner? = null) {
         initFields()
         this.loaderMethod = loaderMethod
         this.nestedScrollView = nestedScrollView
-        retryHelper =RetryHelper(nestedScrollView.context)
+        retryHelper = RetryHelper(nestedScrollView.context)
+        this.lifecycleOwner=lifecycleOwner
 
         NestedScrollObserver.getInstance(nestedScrollView).addObserver(nestedListener)
         loadMoreItems()
@@ -165,7 +168,7 @@ class LazyLoaderHelper {
             ProgressBar?.visibility = View.VISIBLE
             if (addIndex)
                 currentIndex += stepCount
-            retryHelper!!.initializeAndCall { loaderMethod?.invoke(currentIndex) }
+            retryHelper!!.initializeAndCall({ loaderMethod?.invoke(currentIndex) },lifecycleOwner)
 
         }
     }
@@ -184,10 +187,12 @@ class LazyLoaderHelper {
             retryHelper?.retry()
         }
     }
-    fun pauseRetry(){
+
+    fun pauseRetry() {
         retryHelper?.pauseRetry()
     }
-    fun resumeRetry(){
+
+    fun resumeRetry() {
         retryHelper?.resumeRetry()
     }
 

@@ -97,7 +97,7 @@ public class BlurBehind {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Bitmap blurredBitmap = Blur.apply(activity, image, CONSTANT_BLUR_RADIUS);
+            Bitmap blurredBitmap = Blur.INSTANCE.apply(activity, image, CONSTANT_BLUR_RADIUS);
             mImageCache.put(KEY_CACHE_BLURRED_BACKGROUND_IMAGE, blurredBitmap);
 
             return null;

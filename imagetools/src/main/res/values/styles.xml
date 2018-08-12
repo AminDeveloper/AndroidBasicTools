@@ -118,6 +118,16 @@
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
     </style>
 
+//dialog base
+    <style name="FadeInAnimateDialog" parent="@android:style/Theme.Translucent.NoTitleBar">
+        <item name="android:windowAnimationStyle">@style/FadeInDialogAnimation</item>
+    </style>
+
+    <style name="FadeInDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/fade_in_dialog</item>
+        <item name="android:windowExitAnimation">@anim/fade_out_dialog</item>
+    </style>
+
 
     <style name="DialogStyle">
         <item name="android:windowFrame">@null</item>

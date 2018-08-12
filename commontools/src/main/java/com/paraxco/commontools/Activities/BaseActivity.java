@@ -25,14 +25,16 @@ import java.util.Locale;
 /**
  *
  */
-public abstract class BaseActivity extends AppCompatActivity implements  NetworkObserverHandler.NetworkChangeObserver {
+public abstract class BaseActivity extends AppCompatActivity implements NetworkObserverHandler.NetworkChangeObserver {
 //    private boolean showMessagesFromTop = false;
 
     private String[] permissions = new String[]{
             Manifest.permission.INTERNET,
     };
 
-    PermisionUtils permisionUtils =new PermisionUtils(this);
+    PermisionUtils permisionUtils = new PermisionUtils(this);
+    public OnBackPressedListener onBackPressedListener;
+    public OnActivityResultListener onActivityResultListener;
 
 
     @Override
@@ -46,6 +48,13 @@ public abstract class BaseActivity extends AppCompatActivity implements  Network
         super.onStart();
         NetworkObserverHandler.getInstance().addObserver(this);
 //        chageConfiguration();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(onBackPressedListener==null || onBackPressedListener.onBackPressed()){
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -65,12 +74,11 @@ public abstract class BaseActivity extends AppCompatActivity implements  Network
     }
 
 
-
 //    public boolean checkInternetConnection() {
 //        return checkInternetConnection();
 //    }
 
-    public  boolean checkInternetConnection() {
+    public boolean checkInternetConnection() {
         if (!Utils.isNetworkAvailable(this)) {
             showNetworkDialog();
             return false;
@@ -105,6 +113,7 @@ public abstract class BaseActivity extends AppCompatActivity implements  Network
     private void dismissNetworkDialog() {
 
     }
+
     /**
      * shows network error message
      */
@@ -121,7 +130,7 @@ public abstract class BaseActivity extends AppCompatActivity implements  Network
 
 
     public void showTopMessage(String message) {
-        View coordinatorLayout=null;
+        View coordinatorLayout = null;
         if (coordinatorLayout == null)
             coordinatorLayout = getWindow().getDecorView().getRootView();
 
@@ -136,7 +145,7 @@ public abstract class BaseActivity extends AppCompatActivity implements  Network
     }
 
     private void showBottomMessage(String message) {
-        View coordinatorLayout=null;
+        View coordinatorLayout = null;
         if (coordinatorLayout == null)
             coordinatorLayout = getWindow().getDecorView().getRootView();
         Snackbar snackbar = Snackbar
@@ -154,6 +163,7 @@ public abstract class BaseActivity extends AppCompatActivity implements  Network
 
     /**
      * shows a message to user
+     *
      * @param string
      */
     private void showMessage(String string) {
@@ -171,7 +181,6 @@ public abstract class BaseActivity extends AppCompatActivity implements  Network
         resources.updateConfiguration(configuration, displayMetrics);
     }
 
-    public OnActivityResultListener onActivityResultListener;
 
     public void setOnActivityResultListener(OnActivityResultListener onActivityResultListener) {
         this.onActivityResultListener = onActivityResultListener;
@@ -188,6 +197,13 @@ public abstract class BaseActivity extends AppCompatActivity implements  Network
         void onActivityResult(int requestCode, int resultCode, Intent data);
     }
 
+    public interface OnBackPressedListener {
+        /**
+         *
+         * @return true to pass event to parent
+         */
+        boolean onBackPressed();
+    }
     //permisions
 
     /**

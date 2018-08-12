@@ -1,12 +1,17 @@
 package com.paraxco.commontools.Observers;
 
 import android.app.Dialog
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Handler
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import com.paraxco.commontools.R
+import com.paraxco.commontools.Utils.RetryHelper.RetryHelperLive
 import com.paraxco.commontools.Utils.SmartLogger
 import com.paraxco.commontools.Utils.Utils
 import java.lang.Exception
@@ -23,8 +28,20 @@ class RetryHelper(val context: Context, var numOfFinished: Int = 1) : NetworkObs
 
     companion object {
         fun getInstanceAndCall(context: Context, call: () -> Any?, numOfFinished: Int = 1): RetryHelper {
+            return getInstanceAndCall(context, null, call, numOfFinished)
+        }
+
+        fun getInstanceAndCall(activity: AppCompatActivity, call: () -> Any?, numOfFinished: Int = 1): RetryHelper {
+            return getInstanceAndCall(activity, activity as LifecycleOwner, call, numOfFinished)
+        }
+
+        fun getInstanceAndCall(fragment: Fragment, call: () -> Any?, numOfFinished: Int = 1): RetryHelper {
+            return getInstanceAndCall(fragment.context!!, fragment as LifecycleOwner , call, numOfFinished)
+        }
+
+        fun getInstanceAndCall(context: Context, owner: LifecycleOwner?, call: () -> Any?, numOfFinished: Int = 1): RetryHelper {
             val instance = RetryHelper(context, numOfFinished)
-            instance.initializeAndCall(call)
+            instance.initializeAndCall(call, owner)
             return instance
         }
 
@@ -37,9 +54,9 @@ class RetryHelper(val context: Context, var numOfFinished: Int = 1) : NetworkObs
         private var inNoDialogSection = false
 
         //Pause
-        private var paused=false
+        private var paused = false
 
-        private var retriedDuringPause=false //retry has been called after pause
+        private var retriedDuringPause = false //retry has been called after pause
         /**
          * dismiss dialog and no longer show until endNoDialogSection() is called
          */
@@ -119,31 +136,50 @@ class RetryHelper(val context: Context, var numOfFinished: Int = 1) : NetworkObs
     var enabled = true
     var delaySecond: Long = 8
     var call: (() -> Any?)? = null
-    fun initializeAndCall(call: () -> Any?) {
+    private var liveData: RetryHelperLive? = null
+    /**
+     * if owner is passed no need to explicit call for lifecycle like pause resume and disable
+     */
+    fun initializeAndCall(call: () -> Any?, owner: LifecycleOwner? = null) {
         this.call = call
-        call.invoke()
+        owner?.let {
+            liveData = RetryHelperLive(this)
+            liveData?.observe(it, Observer {
+                call.invoke()
+            })
+        }
+        invokeMethod()
+    }
+
+    private fun invokeMethod() {
+        if (liveData == null)
+            call?.invoke()
+        else
+            liveData?.invoke()
     }
 
     fun retry() {
         retry(true)
     }
-    fun pauseRetry(){
-        paused=true
+
+    fun pauseRetry() {
+        paused = true
     }
 
-    fun resumeRetry(){
-        paused=false
-        if(retriedDuringPause)
+    fun resumeRetry() {
+        paused = false
+        if (retriedDuringPause)
             retry()
     }
 
     private var calling = AtomicBoolean(false)
+
     /**
      * call it when something has gone wrong and retry needed
      */
     fun retry(whithDelay: Boolean) {
-        if(paused){
-            retriedDuringPause=true
+        if (paused) {
+            retriedDuringPause = true
             return
         }
 
@@ -163,10 +199,8 @@ class RetryHelper(val context: Context, var numOfFinished: Int = 1) : NetworkObs
                 if (!enabled)
                     return@postDelayed
                 calling.set(false)
-//                GamerCity.currentActivity.runOnUiThread({
-                call?.invoke()
+               invokeMethod()
 
-//                })
                 SmartLogger.logDebug("invoked")
 
             }, if (whithDelay) delaySecond * 1000 else 0)
