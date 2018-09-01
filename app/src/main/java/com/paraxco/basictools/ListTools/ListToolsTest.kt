@@ -2,20 +2,15 @@ package com.paraxco.basictools.Activities.ListTools
 
 import android.os.Bundle
 import android.widget.Toast
-import com.paraxco.basictools.ListTools.Model.CustomItem
 import com.paraxco.basictools.ListTools.Model.RecyclerDataItem
 
 import com.paraxco.basictools.R
 import com.paraxco.calendarview.Fragments.CalendarFragments.StringListSlidingMenue
 import com.paraxco.commontools.Activities.BaseActivity
-import com.paraxco.commontools.Observers.RetryHelper
 import com.paraxco.listtools.ListTools.Adapter.RecyclerView.RecyclerViewDataItemAdapter
 import com.paraxco.listtools.ListTools.DataItem.DataItemBase
 import kotlinx.android.synthetic.main.list_tools_test.*
 import com.paraxco.commontools.Utils.Permision.PermisionUtils
-import org.jetbrains.anko.contentView
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 
 /**

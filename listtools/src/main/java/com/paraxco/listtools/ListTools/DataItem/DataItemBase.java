@@ -28,7 +28,7 @@ public abstract class DataItemBase<DATA_TYPE> {
      */
     public abstract void initializeView(View view);
 
-    public void releaseView() {
+    public void releaseView(){
 
     }
     public void onShowItem(){

@@ -21,7 +21,7 @@ import org.jetbrains.anko.uiThread
  */
 
 class MainActivity : BaseActivity(), TestObserver.ObserverTest {
-    var retryHelper:RetryHelper?=null
+    var retryHelper: RetryHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,14 +46,14 @@ class MainActivity : BaseActivity(), TestObserver.ObserverTest {
         ObserverList.getTestObserver().addObserver(this)
 
         RetryHelperTest.setOnClickListener {
-            retryHelper = RetryHelper.getInstanceAndCall(this,{
+            retryHelper = RetryHelper.getInstanceAndCall(this, {
                 SmartLogger.logDebug("doing ...")
                 Thread.sleep(500)
-               retry()
+                retry()
             })
         }
         DialogTest.setOnClickListener {
-            var myCustomDialog=MyCustomDialog()
+            var myCustomDialog = MyCustomDialog()
             myCustomDialog.showDialog(this)
         }
     }
