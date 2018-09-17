@@ -13,7 +13,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 group 'com.paraxco'
 
-version '0.4.1'
+version '0.4.2'
 
 android {
     compileSdkVersion 27
@@ -22,8 +22,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 27
-        versionName "0.4.1"
+        versionCode 28
+        versionName "0.4.2"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

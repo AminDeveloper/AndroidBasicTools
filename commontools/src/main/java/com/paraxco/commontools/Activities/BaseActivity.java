@@ -28,6 +28,7 @@ import java.util.Locale;
 public abstract class BaseActivity extends AppCompatActivity implements NetworkObserverHandler.NetworkChangeObserver {
 //    private boolean showMessagesFromTop = false;
 
+
     private String[] permissions = new String[]{
             Manifest.permission.INTERNET,
     };
@@ -35,6 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkO
     PermisionUtils permisionUtils = new PermisionUtils(this);
     public OnBackPressedListener onBackPressedListener;
     public OnActivityResultListener onActivityResultListener;
+    public lifecycleListener lifecycleListener;
 
 
     @Override
@@ -44,10 +46,33 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkO
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(lifecycleListener!=null)
+            lifecycleListener.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(lifecycleListener!=null)
+            lifecycleListener.onPause();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         NetworkObserverHandler.getInstance().addObserver(this);
 //        chageConfiguration();
+        if(lifecycleListener!=null)
+            lifecycleListener.onStart();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        NetworkObserverHandler.getInstance().removeObserver(this);
+        if(lifecycleListener!=null)
+            lifecycleListener.onStop();
     }
 
     @Override
@@ -57,11 +82,7 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkO
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        NetworkObserverHandler.getInstance().removeObserver(this);
-    }
+
 
     /**
      * changes local to persian "fa"
@@ -204,6 +225,15 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkO
          */
         boolean onBackPressed();
     }
+    public interface lifecycleListener{
+        void onPause();
+        void onResume();
+        void onStart();
+        void onStop();
+
+    }
+
+
     //permisions
 
     /**

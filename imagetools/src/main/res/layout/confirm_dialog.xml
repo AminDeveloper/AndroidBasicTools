@@ -61,7 +61,7 @@
 
 
                 <Button
-                    android:id="@+id/btnRemove"
+                    android:id="@+id/btnYes"
                     android:layout_width="100dp"
                     android:layout_height="28dp"
                     android:layout_gravity="center"
