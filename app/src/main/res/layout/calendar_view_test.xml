@@ -23,7 +23,7 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
 
-        <!--class="com.paraxco.calendarview.Fragments.CalendarFragment"-->
+        <!--class="ir.mo.amin.hosseini.calendarview.Fragments.CalendarFragment"-->
         <!--/>-->
 
         <LinearLayout

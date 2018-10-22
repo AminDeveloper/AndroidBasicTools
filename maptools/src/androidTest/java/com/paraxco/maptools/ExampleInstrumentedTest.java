@@ -1,4 +1,4 @@
-package com.paraxco.maptools;
+package ir.mo.amin.hosseini.maptools;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.paraxco.maptools.test", appContext.getPackageName());
+        assertEquals("ir.mo.amin.hosseini.maptools.test", appContext.getPackageName());
     }
 }

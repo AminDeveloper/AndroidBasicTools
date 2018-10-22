@@ -8,7 +8,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.paraxco.basictools"
+        applicationId "ir.mo.amin.hosseini.basictools"//ir.mo.amin.hosseini => ir.mo.amin.hosseini
         minSdkVersion 17
         targetSdkVersion 27
         versionCode 1

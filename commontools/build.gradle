@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-group 'com.paraxco'
+group 'ir.mo.amin.hosseini'
 
 version '0.4.6'
 
