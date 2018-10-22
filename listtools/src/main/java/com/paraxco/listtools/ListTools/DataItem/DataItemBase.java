@@ -2,8 +2,8 @@ package com.paraxco.listtools.ListTools.DataItem;
 
 import android.view.View;
 
-import com.paraxco.listtools.ListTools.Interface.ListItemClickListener;
 import com.paraxco.listtools.ListTools.Interface.ItemViewHolder;
+import com.paraxco.listtools.ListTools.Interface.ListItemClickListener;
 
 
 /**
@@ -28,15 +28,26 @@ public abstract class DataItemBase<DATA_TYPE> {
      */
     public abstract void initializeView(View view);
 
-    public void releaseView(){
+    public void releaseView() {
 
     }
-    public void onShowItem(){
+
+    public void onShowItem() {
 
     }
-    public void onHideItem(){
+
+    public void onHideItem() {
 
     }
+
+    /**
+     * set hasStableIds to true in recycler view and implement this method
+     * @return item Id or -1 for no Id
+     */
+    public  long getItemId() {
+        return -1;
+    }
+
 
     public View getView() {
         if (holder != null)
@@ -82,4 +93,5 @@ public abstract class DataItemBase<DATA_TYPE> {
     public int getLayoutResourceID() {
         return layoutResourceID;
     }
+
 }

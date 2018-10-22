@@ -1,1 +1,1 @@
-include ':app', ':listtools', ':formtools', ':calendarview', ':commontools', ':maptools', ':imagetools', ':persiandatepicker', ':webservicetools', ':blurtools'
+include ':app', ':listtools', ':formtools', ':calendarview', ':commontools', ':maptools', ':imagetools', ':persiandatepicker', ':webservicetools', ':customview'

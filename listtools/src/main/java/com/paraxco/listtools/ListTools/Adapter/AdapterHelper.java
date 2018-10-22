@@ -89,6 +89,9 @@ public class AdapterHelper<DATA_ITEM_TYPE extends DataItemBase> {
             return items.indexOf(dataItem);
         return -1;
     }
+    public long getItemId(int position) {
+        return items.get(position).getItemId();//for hasStableIds method in recyclerview adapter
+    }
 
     public void bindToViewHolder(ItemViewHolder holder, int position) {
         DATA_ITEM_TYPE dataItem = getItem(position);
@@ -110,5 +113,6 @@ public class AdapterHelper<DATA_ITEM_TYPE extends DataItemBase> {
     public <VH extends RecyclerView.ViewHolder> void clearItems() {
         items.clear();
     }
+
 
 }

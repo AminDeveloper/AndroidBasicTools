@@ -1,12 +1,10 @@
 package com.paraxco.imagetools.Dialog
 
 import android.app.Activity
-import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.Window
-import android.widget.TextView
 import com.paraxco.imagetools.R
 import com.paraxco.imagetools.Utils.ImageUtils
 
@@ -15,11 +13,11 @@ import com.paraxco.imagetools.Utils.ImageUtils
  * and btnCancel for dismiss
  */
 open class BluredBackgroundDialog(val layoutRes: Int) {
-    protected var dialog: Dialog? = null
+    protected var dialog: LifecycleDialog? = null
 
     fun showDialog(activity: Activity) {
 
-        dialog = Dialog(activity, R.style.FadeInAnimateDialog)
+        dialog = LifecycleDialog(activity, R.style.FadeInAnimateDialog)
         dialog!!.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         dialog!!.window!!.attributes.windowAnimations = R.style.FadeInDialogAnimation
         dialog!!.setContentView(layoutRes)

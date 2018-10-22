@@ -56,6 +56,16 @@ class MainActivity : BaseActivity(), TestObserver.ObserverTest {
             var myCustomDialog = MyCustomDialog()
             myCustomDialog.showDialog(this)
         }
+
+        progressButton.setOnClickListener {
+            doAsync {
+                Thread.sleep(2000)
+//                uiThread {
+                    progressButton.showButton()
+//                }
+            }
+
+        }
     }
 
     private fun retry() {
@@ -70,7 +80,7 @@ class MainActivity : BaseActivity(), TestObserver.ObserverTest {
 
     override fun onDestroy() {
         super.onDestroy()
-        ObserverList.getTestObserver().removeObserver(this)
+//        ObserverList.getTestObserver().removeObserver(this)
 
     }
 

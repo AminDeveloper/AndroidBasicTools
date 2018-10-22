@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <Button
         android:id="@+id/showListToolsTest"
@@ -45,6 +46,16 @@
         android:id="@+id/DialogTest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="RetryHelperTest"
+        android:text="DialogTest"
         android:textAllCaps="false" />
+    <com.paraxco.customview.ProgressButton
+        android:id="@+id/progressButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:text="hello2 ?Hello"
+        android:background="@color/red_you"
+        app:textColor="@color/green_blue"
+        >
+
+    </com.paraxco.customview.ProgressButton>
 </LinearLayout>

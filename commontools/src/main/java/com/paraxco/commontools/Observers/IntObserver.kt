@@ -7,7 +7,7 @@ import com.paraxco.commontools.ObserverBase.StatefullObserverHandler
  *
  */
 
-class IntObserver private constructor() : StatefullObserverHandler<IntObserver.IntDataObserver, Int>() {
+open class IntObserver private constructor() : StatefullObserverHandler<IntObserver.IntDataObserver, Int>() {
 
     override fun informObserverInternal(intDataObserver: IntDataObserver, integer: Int?) {
         intDataObserver.onDataChanged(integer!!)

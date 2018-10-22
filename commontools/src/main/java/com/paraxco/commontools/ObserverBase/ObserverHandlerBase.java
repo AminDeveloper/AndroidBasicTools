@@ -1,10 +1,13 @@
 package com.paraxco.commontools.ObserverBase;
 
 
+import android.arch.lifecycle.GenericLifecycleObserver;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleOwner;
+
 import com.paraxco.commontools.Utils.SmartLogger;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @param <OBSERVER_TYPE>
  */
-abstract public class ObserverHandlerBase<OBSERVER_TYPE,OBSERVABLE_TYPE> {
+abstract public class ObserverHandlerBase<OBSERVER_TYPE, OBSERVABLE_TYPE> {
 
     ConcurrentHashMap<OBSERVER_TYPE, Boolean> observerList = new ConcurrentHashMap();
     LinkedList<ObserverListChangeListener<OBSERVER_TYPE>> observerListChangeListeners = new LinkedList<>();
@@ -23,18 +26,23 @@ abstract public class ObserverHandlerBase<OBSERVER_TYPE,OBSERVABLE_TYPE> {
         return observerList.size();
     }
 
-    public void addObserver(OBSERVER_TYPE observer) {
+    public void addObserver(LifecycleOwner owner, OBSERVER_TYPE observer) {
         synchronized (this) {
+            setOwner(owner, observer);
             observerList.put(observer, true);
-            callBackObserverListChangeListeners(true,observer);
+            callBackObserverListChangeListeners(true, observer);
             SmartLogger.logDebug("observerList size:" + observerList.size());
         }
+    }
+
+    public void addObserver(OBSERVER_TYPE observer) {
+        addObserver(null, observer);
     }
 
     public void removeObserver(OBSERVER_TYPE observer) {
         synchronized (this) {
             observerList.remove(observer);
-            callBackObserverListChangeListeners(false,observer);
+            callBackObserverListChangeListeners(false, observer);
             SmartLogger.logDebug("observerList size:" + observerList.size());
         }
     }
@@ -48,7 +56,8 @@ abstract public class ObserverHandlerBase<OBSERVER_TYPE,OBSERVABLE_TYPE> {
             }
         }
     }
-    public void informObservers(OBSERVABLE_TYPE data){
+
+    public void informObservers(OBSERVABLE_TYPE data) {
         informObserverListInternal(data);
     }
 
@@ -59,6 +68,36 @@ abstract public class ObserverHandlerBase<OBSERVER_TYPE,OBSERVABLE_TYPE> {
 //        informObserverListInternal(tempList);
 //    }
 
+    private void setOwner(LifecycleOwner owner, final OBSERVER_TYPE observer) {
+        if (owner == null && observer instanceof LifecycleOwner) {
+            owner = (LifecycleOwner) observer;
+        }
+
+        if (owner != null)
+            owner.getLifecycle().addObserver(new GenericLifecycleObserver() {
+                @Override
+                public void onStateChanged(LifecycleOwner source, Lifecycle.Event event) {
+                    switch (event) {
+//                        case ON_CREATE:
+//                            break;
+//                        case ON_START:
+//                            break;
+//                        case ON_RESUME:
+//                            break;
+//                        case ON_PAUSE:
+//                            break;
+//                        case ON_STOP:
+//                            break;
+                        case ON_DESTROY:
+                            removeObserver(observer);
+                            break;
+//                        case ON_ANY:
+//                            throw new IllegalArgumentException("ON_ANY must not been send by anybody");
+                    }
+                }
+            });
+    }
+
     private void callBackObserverListChangeListeners(boolean added, OBSERVER_TYPE observer) {
         for (ObserverListChangeListener observerListChangeListener : observerListChangeListeners)
             if (added)
@@ -67,11 +106,13 @@ abstract public class ObserverHandlerBase<OBSERVER_TYPE,OBSERVABLE_TYPE> {
                 observerListChangeListener.observerRemoved(observer, getObserversCount());
     }
 
-    public void addObserverChangeListener(ObserverListChangeListener<OBSERVER_TYPE> observerListChangeListener) {
+    public void addObserverChangeListener
+            (ObserverListChangeListener<OBSERVER_TYPE> observerListChangeListener) {
         observerListChangeListeners.add(observerListChangeListener);
     }
 
-    public void removeObserverChangeListener(ObserverListChangeListener<OBSERVER_TYPE> observerListChangeListener) {
+    public void removeObserverChangeListener
+            (ObserverListChangeListener<OBSERVER_TYPE> observerListChangeListener) {
         observerListChangeListeners.remove(observerListChangeListener);
     }
 
@@ -81,7 +122,8 @@ abstract public class ObserverHandlerBase<OBSERVER_TYPE,OBSERVABLE_TYPE> {
      * @param observe
      * @param data
      */
-    abstract protected void informObserverInternal(OBSERVER_TYPE observe, OBSERVABLE_TYPE data);
+    abstract protected void informObserverInternal(OBSERVER_TYPE observe, OBSERVABLE_TYPE data)
+    ;
 
 
     public interface ObserverListChangeListener<OBSERVER_TYPE> {

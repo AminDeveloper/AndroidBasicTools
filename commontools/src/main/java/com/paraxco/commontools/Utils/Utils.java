@@ -1,6 +1,7 @@
 package com.paraxco.commontools.Utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
@@ -166,19 +167,21 @@ public class Utils {
 
     }
 
-    public static void restart(Context context, int delay) {
+    public static void restartApp(Context context, int delay) {
+
         if (delay == 0) {
-            delay = 1;
+            delay = 200;
         }
         Log.e("", "restarting app");
         Intent restartIntent = context.getPackageManager()
                 .getLaunchIntentForPackage(context.getPackageName());
-        PendingIntent intent = PendingIntent.getActivity(
+        @SuppressLint("WrongConstant") PendingIntent intent = PendingIntent.getActivity(
                 context, 0,
-                restartIntent, Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                restartIntent, Intent.FLAG_ACTIVITY_CLEAR_TOP | PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         manager.set(AlarmManager.RTC, System.currentTimeMillis() + delay, intent);
-        System.exit(2);
+        System.exit(0);
+
     }
 
     public static float pxFromDP(float dp, Context context) {

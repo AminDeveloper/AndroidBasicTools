@@ -57,6 +57,11 @@ public abstract class RecyclerViewAdapter<DATA_ITEM_TYPE extends DataItemBase, V
     }
 
     @Override
+    public long getItemId(int position)  {
+        return adapterHelper.getItemId(position);//for hasStableIds method
+    }
+
+    @Override
     public int getItemCount() {
         return adapterHelper.getItemCount();
     }

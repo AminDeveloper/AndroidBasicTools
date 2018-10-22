@@ -23,6 +23,8 @@ public class RecyclerViewDataItemAdapter<DATA_ITEM_TYPE extends DataItemBase> ex
     public RecyclerViewDataItemAdapter(RecyclerView recyclerView, List<DATA_ITEM_TYPE> items) {
         super(recyclerView.getContext(), items);
         this.recyclerView = recyclerView;
+        if (items.get(0) != null && items.get(0).getItemId() > -1)
+            this.setHasStableIds(true);
         this.recyclerView.setAdapter(this);
     }
 

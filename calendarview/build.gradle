@@ -59,6 +59,6 @@ dependencies {
 repositories {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url "C:/Users/Amin/.m2/repository" } // mavenLocal()
+    maven { url "D:/Android_Tools/repository" } // mavenLocal()
 
 }
