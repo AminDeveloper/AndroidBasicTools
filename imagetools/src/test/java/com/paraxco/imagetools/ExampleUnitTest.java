@@ -1,4 +1,4 @@
-package ir.mo.amin.hosseini.imagetools;
+package com.paraxco.imagetools;
 
 import org.junit.Test;
 

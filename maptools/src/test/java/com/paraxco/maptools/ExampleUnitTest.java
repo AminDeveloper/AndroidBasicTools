@@ -1,4 +1,4 @@
-package ir.mo.amin.hosseini.maptools;
+package com.paraxco.maptools;
 
 import org.junit.Test;
 

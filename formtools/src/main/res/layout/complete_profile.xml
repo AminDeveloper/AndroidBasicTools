@@ -85,14 +85,14 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <ir.mo.amin.hosseini.app63167.Helpers.CustomViewPager
+        <com.paraxco.app63167.Helpers.CustomViewPager
             android:id="@+id/complete_profile_view_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
             android:layout_weight="1">
 
-        </ir.mo.amin.hosseini.app63167.Helpers.CustomViewPager>
+        </com.paraxco.app63167.Helpers.CustomViewPager>
 
         <TextView
             android:id="@+id/complete_profile_button"

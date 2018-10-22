@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-gcm:11.4.2'//might not be necessary
     implementation "com.google.android.gms:play-services-location:11.4.2"
     implementation 'com.google.maps.android:android-maps-utils:0.5+'
-    implementation 'ir.mo.amin.hosseini:commontools:0.1.5'
+    implementation 'com.paraxco:commontools:0.1.5'
 
 //    compile project(path: ':commontools')
 }

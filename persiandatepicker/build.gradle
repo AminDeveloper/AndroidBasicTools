@@ -12,7 +12,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
 version '0.0.3'
-group 'ir.mo.amin.hosseini'
+group 'com.paraxco'
 
 android {
     compileSdkVersion 25

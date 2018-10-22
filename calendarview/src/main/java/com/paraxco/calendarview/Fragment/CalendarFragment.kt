@@ -48,7 +48,7 @@ class CalendarFragment : ViewContainerFragment() {
             SmartLogger.logDebug()
         }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         CalendarFragment.calendarFragment = this
 

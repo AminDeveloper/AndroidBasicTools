@@ -1,4 +1,4 @@
-package ir.mo.amin.hosseini.calendarview;
+package com.paraxco.calendarview;
 
 import org.junit.Test;
 

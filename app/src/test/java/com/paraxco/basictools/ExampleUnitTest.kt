@@ -1,4 +1,4 @@
-package ir.mo.amin.hosseini.basictools
+package com.paraxco.basictools
 
 import org.junit.Test
 

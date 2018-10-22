@@ -9,9 +9,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/blurtools" />
             <option value="$PROJECT_DIR$/calendarview" />
             <option value="$PROJECT_DIR$/commontools" />
+            <option value="$PROJECT_DIR$/customview" />
             <option value="$PROJECT_DIR$/formtools" />
             <option value="$PROJECT_DIR$/imagetools" />
             <option value="$PROJECT_DIR$/listtools" />

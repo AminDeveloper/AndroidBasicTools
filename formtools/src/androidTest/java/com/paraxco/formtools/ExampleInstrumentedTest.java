@@ -1,4 +1,4 @@
-package ir.mo.amin.hosseini.formtools;
+package com.paraxco.formtools;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("ir.mo.amin.hosseini.formtools.test", appContext.getPackageName());
+        assertEquals("com.paraxco.formtools.test", appContext.getPackageName());
     }
 }
