@@ -12,7 +12,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'kotlin-android'
 
-version '0.1.3'
+version '0.1.4'
 group 'com.paraxco'
 
 android {
@@ -21,8 +21,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 7
-        versionName "0.1.3"
+        versionCode 8
+        versionName "0.1.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -31,11 +31,9 @@ android {
         release {
             minifyEnabled false
             shrinkResources false
-
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
@@ -51,7 +49,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
-  implementation project(path: ':commontools')
+    implementation project(path: ':commontools')
 //    implementation 'com.paraxco:commontools:0.3.6'
 
 }
