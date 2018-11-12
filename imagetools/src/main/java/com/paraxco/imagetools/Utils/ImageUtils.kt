@@ -96,7 +96,9 @@ object ImageUtils {
         view.destroyDrawingCache()
         return b
     }
-    fun blurView(BackgroundActivity: Activity, view: View) {
+    fun blurView(BackgroundActivity: Activity, view: View?) {
+        if(view==null)
+            return
         doAsync {
             val map = ImageUtils.takeScreenShot(BackgroundActivity)
 
