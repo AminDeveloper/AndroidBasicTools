@@ -12,7 +12,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'kotlin-android'
 
-version '0.1.5'
+version '0.1.6'
 group 'com.paraxco'
 
 android {
@@ -21,8 +21,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 8
-        versionName "0.1.5"
+        versionCode 9
+        versionName "0.1.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }

@@ -97,8 +97,7 @@ object ImageUtils {
         return b
     }
     fun blurView(BackgroundActivity: Activity, view: View?) {
-        if(view==null)
-            return
+        view?:return
         doAsync {
             val map = ImageUtils.takeScreenShot(BackgroundActivity)
 
